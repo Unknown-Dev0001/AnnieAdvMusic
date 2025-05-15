@@ -8,11 +8,10 @@ from config import OWNER_ID
 userbot = Userbot()
 
 BOT_LIST = [
-    "TuneviaBot",
-    "AvaTheRobot",
-    "TheFlashRobot",
-    "AnnieTheRobot",
-    "GuardShieldRobot"
+    "MoviexInfoxBot",
+    "FileStorexpBot",
+    "FilexRenamerxBot",
+    "SecretxSharingxBot"
 ]
 
 @app.on_message(filters.command("botschk") & filters.group)
