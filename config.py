@@ -66,6 +66,12 @@ STRING3 = getenv("STRING_SESSION3")
 STRING4 = getenv("STRING_SESSION4")
 STRING5 = getenv("STRING_SESSION5")
 
+# ========= PORT ========= #
+WEB_SERVER = bool(os.getenv("WEB_SERVER", True)) # make it True if deploying on koyeb/render else False
+PING_URL = os.getenv("PING_URL") # add your koyeb/render's public url
+PING_TIME = int(os.getenv("PING_TIME")) # Add time_out in seconds
+
+
 # ───── Server Settings ───── #
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", "3000"))
 PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", "2500"))
