@@ -2,19 +2,10 @@ from pyrogram import Client
 
 import config
 
-from ..logging  import LOGGER
+from ..logging import LOGGER
 
 assistants = []
 assistantids = []
-
-GROUPS_TO_JOIN = [
-    "CertifiedDiscussion",
-    "CertifiedCoders",
-    "CertifiedCodes",
-    "CertifiedDevs",
-    "CertifiedNetwork",
-]
-
 
 # Initialize userbots
 class Userbot:
@@ -68,17 +59,12 @@ class Userbot:
 
         try:
             await client.start()
-            for group in GROUPS_TO_JOIN:
-                try:
-                    await client.join_chat(group)
-                except Exception:
-                    pass
 
             assistants.append(index)
 
             try:
                 await client.send_message(
-                    config.LOGGER_ID, f"Annie's Assistant {index} Started"
+                    config.LOGGER_ID, f"Lrya's Assistant Started! [{index}]"
                 )
             except Exception:
                 LOGGER(__name__).error(
@@ -96,7 +82,7 @@ class Userbot:
             LOGGER(__name__).error(f"Failed to start Assistant {index}: {e}")
 
     async def start(self):
-        LOGGER(__name__).info("Starting Tune's Assistants...")
+        LOGGER(__name__).info("Starting Lrya's Assistants...")
         await self.start_assistant(self.one, 1)
         await self.start_assistant(self.two, 2)
         await self.start_assistant(self.three, 3)
