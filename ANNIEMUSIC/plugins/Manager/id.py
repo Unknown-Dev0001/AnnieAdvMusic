@@ -12,7 +12,7 @@ async def get_id(client, message: Message):
     reply = message.reply_to_message
 
     text = f"**[ᴍᴇssᴀɢᴇ ɪᴅ:]({message.link})** `{message.id}`\n"
-    text += f"**[ʏᴏᴜʀ ɪᴅ:](tg://user?id={user.id})** `{user.id}`\n"
+    text += f"**[ʏᴏᴜʀ ɪᴅ:](tg://openmessage?user_id={user.id})** `{user.id}`\n"
 
     if len(message.command) == 2:
         try:
