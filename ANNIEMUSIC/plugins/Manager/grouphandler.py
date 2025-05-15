@@ -113,7 +113,7 @@ async def set_title(_, message: Message):
         await message.reply_text(f"**ғᴀɪʟᴇᴅ ᴛᴏ sᴇᴛ ᴛɪᴛʟᴇ:**\n`{str(e)}`")
 
 
-@app.on_message(filters.command("setdiscription") & admin_filter)
+@app.on_message(filters.command("setdescription") & admin_filter)
 async def set_description(_, message: Message):
     if not is_group(message):
         return await message.reply_text("**ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ᴡᴏʀᴋs ᴏɴʟʏ ɪɴ ɢʀᴏᴜᴘs!**")
