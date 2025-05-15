@@ -151,7 +151,7 @@ HELP_11 = """
 
 <b><u>Cʜᴀᴛ-ᴡɪᴛʜ-AI ғᴇᴀᴛᴜʀᴇs.</u></b>
 
-• Jarvis - ʏᴏᴜ ᴄᴀɴ ᴀᴄᴄᴇꜱꜱ ᴊᴀʀᴠɪꜱ ʙʏ ᴛʜɪꜱ.
+• Lrya - ʏᴏᴜ ᴄᴀɴ ᴀᴄᴄᴇꜱꜱ ᴊᴀʀᴠɪꜱ ʙʏ ᴛʜɪꜱ.
 • Assis - ᴛʜᴇ ᴀɪ ᴡɪʟʟ ʀᴇꜱᴘᴏɴᴅ ɪɴ ᴀᴜᴅɪᴏ ꜰᴏʀᴍᴀᴛ.
 • /gpt - ᴀᴄᴄᴇꜱꜱ ɢᴘᴛ ꜰᴜɴᴄᴛɪᴏɴᴀʟɪᴛʏ.
 • /bard - ɪɴᴠᴏᴋᴇ ᴛʜᴇ ʙᴀʀᴅ ꜰᴇᴀᴛᴜʀᴇ.
@@ -160,7 +160,6 @@ HELP_11 = """
 • /geminivision - ᴇxᴘʟᴏʀᴇ ɢᴇᴍɪɴɪ ᴍᴏᴅᴇ.
 • /mistral - ᴀᴄᴛɪᴠᴀᴛᴇ ᴍɪꜱᴛʀᴀʟ ᴄᴏᴅᴇ.
 • /tts - ᴄᴏɴᴠᴇʀᴛ ᴛᴇxᴛ ᴛᴏ ꜱᴘᴇᴇᴄʜ.
-• /enhance - ɪᴍᴀɢᴇ ᴜᴘsᴄᴀʟᴇ ғʀᴇᴇ ᴀᴘɪ.
 """
 
 # ───────────────────────────────────────────────────────────────────────
@@ -191,10 +190,10 @@ AI drawing & editing.
 
 # ───────────────────────────────────────────────────────────────────────
 HELP_14 = """
-<u><b>ʟᴏɢ / ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ :</b></u>  (ꜱᴜᴅᴏ)
+<u><b>ʟᴏɢ / ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ :</b></u>  [ᴏɴʟʏ ꜰᴏʀ ꜱᴜᴅᴏᴇʀꜱ]
 Keep the bot healthy.
 
-• /logs – Get latest Heroku/Docker logs.  
+• /logs – Get latest logs.  
 • /logger enable – Start live message logging.  
 • /maintenance enable – Bot replies “Under maintenance”.  
 • /update – Git pull & PM you the diff.  
@@ -221,11 +220,11 @@ HELP_16 = """
 • /bots : ᴅɪꜱᴘʟᴀʏꜱ ᴛʜᴇ ʟɪꜱᴛ ᴏꜰ ʙᴏᴛꜱ ɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ.
 • /settitle : ꜱᴇᴛꜱ ᴛʜᴇ ᴛɪᴛʟᴇ ᴏꜰ ᴛʜᴇ ɢʀᴏᴜᴘ.
 • /setdescription : ꜱᴇᴛꜱ ᴛʜᴇ ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ ᴏꜰ ᴛʜᴇ ɢʀᴏᴜᴘ.
-• /wel : ᴛᴜʀɴ ᴡᴇʟᴄᴏᴍᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ᴏɴ ᴏʀ ᴏꜰꜰ.
+• /welcome : ᴛᴜʀɴ ᴡᴇʟᴄᴏᴍᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ᴏɴ ᴏʀ ᴏꜰꜰ.
 • /setphoto : ꜱᴇᴛꜱ ᴛʜᴇ ɢʀᴏᴜᴘ ᴘʜᴏᴛᴏ.
 • /removephoto : ʀᴇᴍᴏᴠᴇꜱ ᴛʜᴇ ɢʀᴏᴜᴘ ᴘʜᴏᴛᴏ.
 • /zombies : ʀᴇᴍᴏᴠᴇꜱ ᴅᴇʟᴇᴛᴇᴅ ᴀᴄᴄᴏᴜɴᴛꜱ ꜰʀᴏᴍ ᴛʜᴇ ɢʀᴏᴜᴘ.
-• /imposter ᴏɴ• /ᴏꜰꜰ : ᴛᴜʀɴꜱ ᴏɴ ᴏʀ ᴏꜰꜰ ᴛʜᴇ ᴡᴀᴛᴄʜᴇʀ ꜰᴏʀ ʏᴏᴜʀ ɢʀᴏᴜᴘ, ᴡʜɪᴄʜ ɴᴏᴛɪꜰɪᴇꜱ ᴀʙᴏᴜᴛ ᴜꜱᴇʀꜱ ᴡʜᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɪʀ ɴᴀᴍᴇ ᴏʀ ᴜꜱᴇʀɴᴀᴍᴇ.
+• /imposter enable/disable: ᴛᴜʀɴꜱ ᴏɴ ᴏʀ ᴏꜰꜰ ᴛʜᴇ ᴡᴀᴛᴄʜᴇʀ ꜰᴏʀ ʏᴏᴜʀ ɢʀᴏᴜᴘ, ᴡʜɪᴄʜ ɴᴏᴛɪꜰɪᴇꜱ ᴀʙᴏᴜᴛ ᴜꜱᴇʀꜱ ᴡʜᴏ ᴄʜᴀɴɢᴇ ᴛʜᴇɪʀ ɴᴀᴍᴇ ᴏʀ ᴜꜱᴇʀɴᴀᴍᴇ.
 • /lang : ᴄʜᴀɴɢᴇ ᴛʜᴇ ʙᴏᴛ ʟᴀɴɢᴜᴀɢᴇ.
 
 """
@@ -237,8 +236,7 @@ Random social mini-games.
 
 • /couple – Pick today’s random pair.  
 • /love Alice Bob – % compatibility.  
-• /cute, /hot, /gay, /sexy, /horny … – Self-rating fun.  
-• /kiss, /hug, /slap – Role-play replies.  
+• /hug, /slap – Role-play replies.  
 • /sleep – Bot tells you good night.  
 • /wish Happy birthday! – Sweet wish card generator.  
 """
