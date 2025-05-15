@@ -2,7 +2,7 @@ from pyrogram import filters
 import requests
 from ANNIEMUSIC import app
 
-IPINFO_TOKEN = '6274faab58da61'
+IPINFO_TOKEN = '3654e944b6d522'
 IPQUALITYSCORE_API_KEY = '952ztTq41AxoXam43pStVjVNcEjo1ntQ'
 
 
