@@ -100,7 +100,7 @@ def build_pic(av, fn, uid, un):
 # ─────────────────────────────
 @app.on_message(filters.command("welcome") & filters.group)
 async def toggle(client, m: Message):
-    usage = "**Usage:**\n⦿/welcome [on|off]\n➤ Annie Special Welcome....."
+    usage = "**Usage:**\n⦿/welcome [on|off]\n➤ Lrya’s Special Welcome....."
     if len(m.command) != 2:
         return await m.reply_text(usage)
 
