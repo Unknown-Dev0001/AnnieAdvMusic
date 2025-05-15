@@ -1,9 +1,8 @@
 import re
-import os
+from os import getenv
 from dotenv import load_dotenv
 from pyrogram import filters
 
-# Load environment variables from .env file
 load_dotenv()
 
 # ───── Basic Bot Configuration ───── #
@@ -30,10 +29,10 @@ TG_AUDIO_FILESIZE_LIMIT = int(getenv("TG_AUDIO_FILESIZE_LIMIT", "5242880000"))
 TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 
 # ───── Custom API Configs ───── #
-API_URL = getenv("API_URL") #optional
-API_KEY = getenv("API_KEY") #optional
-COOKIE_URL = getenv("COOKIE_URL") #necessary
-DEEP_API = getenv("DEEP_API") #optional
+API_URL = getenv("API_URL") # optional
+API_KEY = getenv("API_KEY") # optional
+COOKIE_URL = getenv("COOKIE_URL") # necessary
+DEEP_API = getenv("DEEP_API") # optional
 
 # ───── Heroku Configuration ───── #
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
@@ -53,7 +52,7 @@ AUTO_LEAVING_ASSISTANT = False
 AUTO_LEAVE_ASSISTANT_TIME = int(getenv("ASSISTANT_LEAVE_TIME", "11500"))
 
 # ───── Error Handling ───── #
-DEBUG_IGNORE_LOG =True
+DEBUG_IGNORE_LOG = True
 
 # ───── Spotify Credentials ───── #
 SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID", "1281122466184cafa5c42259671f77ae")
@@ -67,10 +66,9 @@ STRING4 = getenv("STRING_SESSION4")
 STRING5 = getenv("STRING_SESSION5")
 
 # ========= PORT ========= #
-WEB_SERVER = bool(os.getenv("WEB_SERVER", True)) # make it True if deploying on koyeb/render else False
-PING_URL = os.getenv("PING_URL") # add your koyeb/render's public url
-PING_TIME = int(os.getenv("PING_TIME")) # Add time_out in seconds
-
+WEB_SERVER = bool(getenv("WEB_SERVER", True))
+PING_URL = getenv("PING_URL")  # add your koyeb/render's public url
+PING_TIME = int(getenv("PING_TIME"))  # Add timeout in seconds
 
 # ───── Server Settings ───── #
 SERVER_PLAYLIST_LIMIT = int(getenv("SERVER_PLAYLIST_LIMIT", "3000"))
