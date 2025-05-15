@@ -68,7 +68,7 @@ async def whois_handler(_, message: Message):
             f"➣ <b>ʙɪᴏ:</b> <code>{bio}</code>"
         )
 
-        profile_url = f"https://t.me/{user.username}" if user.username else f"tg://user?id={user.id}"
+        profile_url = f"https://t.me/{user.username}" if user.username else f"tg://openmessage?user_id={user.id}"
         buttons = InlineKeyboardMarkup([[
             InlineKeyboardButton("👤 ᴠɪᴇᴡ ᴘʀᴏғɪʟᴇ", url=profile_url),
             InlineKeyboardButton("📞 ᴘʜᴏɴᴇ", url="tg://settings")
@@ -92,7 +92,7 @@ async def whois_handler(_, message: Message):
             )
 
     except PeerIdInvalid:
-        await message.reply("🥀 ɪ ᴄᴏᴜʟᴅɴ'ᴛ ꜰɪɴᴅ ᴛʜᴀᴛ ᴜsᴇʀ.")
+        await message.reply("ɪ ᴄᴏᴜʟᴅɴ'ᴛ ꜰɪɴᴅ ᴛʜᴀᴛ ᴜsᴇʀ.")
     except FloodWait as e:
         await asyncio.sleep(e.value)
         return await whois_handler(_, message)
