@@ -52,7 +52,7 @@ async def sudoers_list(client, message: Message):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     await message.reply_video(
-        video="https://files.catbox.moe/x7v3k6.mp4",
+        video="https://ar-hosting.pages.dev/1747386280605.mp4",
         caption="**» ᴄʜᴇᴄᴋ sᴜᴅᴏ ʟɪsᴛ ʙʏ ɢɪᴠᴇɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ.**\n\n**» ɴᴏᴛᴇ:**  ᴏɴʟʏ sᴜᴅᴏ ᴜsᴇʀs ᴄᴀɴ ᴠɪᴇᴡ.",
         reply_markup=reply_markup
     )
