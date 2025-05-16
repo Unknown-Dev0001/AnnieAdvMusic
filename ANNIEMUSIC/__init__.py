@@ -5,6 +5,7 @@ from ANNIEMUSIC.core.userbot import Userbot
 from ANNIEMUSIC.misc import dbb, heroku
 
 from .logging import LOGGER
+from ANNIEMUSIC.config import SUDOERS
 
 dirr()
 git()
@@ -13,7 +14,6 @@ heroku()
 
 app = JARVIS()
 userbot = Userbot()
-
 
 from .platforms import *
 
