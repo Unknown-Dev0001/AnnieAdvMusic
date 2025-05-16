@@ -119,3 +119,6 @@ if SUPPORT_CHANNEL and not re.match(r"^https?://", SUPPORT_CHANNEL):
 
 if SUPPORT_CHAT and not re.match(r"^https?://", SUPPORT_CHAT):
     raise SystemExit("[ERROR] - Invalid SUPPORT_CHAT URL. Must start with https://")
+
+# ───── SUDO USERS ───── #
+SUDOERS = {OWNER_ID}  # Add more user IDs if needed
