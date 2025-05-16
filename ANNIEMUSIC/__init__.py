@@ -5,7 +5,7 @@ from ANNIEMUSIC.core.userbot import Userbot
 from ANNIEMUSIC.misc import dbb, heroku
 
 from .logging import LOGGER
-from ANNIEMUSIC.config import SUDOERS
+from config import SUDOERS
 
 dirr()
 git()
