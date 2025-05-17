@@ -1,11 +1,14 @@
 import os
 import aiohttp
 import aiofiles
+from urllib.parse import quote_plus
 
-from config import YOUR_IMGGEN_API_KEY
 from ANNIEMUSIC import app
+from config import PIXELCUT_API_KEY  # Ensure your key is set like: PIXELCUT_API_KEY = "sk_..."
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 
 async def download_from_url(path: str, url: str) -> str:
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -17,23 +20,21 @@ async def download_from_url(path: str, url: str) -> str:
                 return path
     return None
 
+
 async def post_file(url: str, file_path: str, headers: dict):
     async with aiohttp.ClientSession() as session:
         with open(file_path, 'rb') as f:
             form = aiohttp.FormData()
-            form.add_field('image', f, filename=os.path.basename(file_path), content_type='application/octet-stream')
+            form.add_field('image_file', f, filename=os.path.basename(file_path), content_type='image/jpeg')
+
             async with session.post(url, data=form, headers=headers) as resp:
                 return await resp.json()
 
-async def post_data(url: str, data: dict, headers: dict):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=data, headers=headers) as resp:
-            return await resp.json()
 
 @app.on_message(filters.command("upscale"))
 async def upscale_image(_, message: Message):
-    if not YOUR_IMGGEN_API_KEY:
-        return await message.reply_text("🚫 Missing API key.")
+    if not PIXELCUT_API_KEY:
+        return await message.reply_text("🚫 Missing Pixelcut API key.")
 
     reply = message.reply_to_message
     if not reply or not reply.photo:
@@ -44,12 +45,12 @@ async def upscale_image(_, message: Message):
     try:
         local_path = await reply.download()
         resp = await post_file(
-            "https://app.imggen.ai/v1/upscale-image",
+            "https://api.developer.pixelcut.ai/v1/upscale",
             local_path,
-            headers={'X-IMGGEN-KEY': YOUR_IMGGEN_API_KEY}
+            headers={'Authorization': PIXELCUT_API_KEY}
         )
 
-        image_url = resp.get("output") or resp.get("image") or resp.get("image_url") or resp.get("output_url")
+        image_url = resp.get("output_url") or resp.get("image") or resp.get("image_url")
         if not image_url:
             return await status.edit("❌ Upscale request failed.")
 
@@ -63,11 +64,9 @@ async def upscale_image(_, message: Message):
     except Exception as e:
         await status.edit(f"⚠️ Error: `{str(e)}`")
 
+
 @app.on_message(filters.command("getdraw"))
 async def draw_image(_, message: Message):
-    if not YOUR_IMGGEN_API_KEY:
-        return await message.reply_text("🚫 API key is missing.")
-
     reply = message.reply_to_message
     query = None
 
@@ -81,23 +80,13 @@ async def draw_image(_, message: Message):
 
     status = await message.reply_text("🎨 Generating image...")
 
-    user_id = message.from_user.id
-    chat_id = message.chat.id
-    temp_path = f"cache/{user_id}_{chat_id}_{message.id}.png"
-
     try:
-        resp = await post_data(
-            "https://app.imggen.ai/v1/generate-image",
-            data={
-                'prompt': query,
-                'aspect_ratio': 'square'
-            },
-            headers={'X-IMGGEN-KEY': YOUR_IMGGEN_API_KEY}
-        )
+        safe_prompt = quote_plus(query)
+        image_url = f"https://botfather.cloud/Apis/ImgGen/client.php?inputText={safe_prompt}"
 
-        image_url = resp.get("output") or resp.get("image") or resp.get("image_url") or resp.get("output_url")
-        if not image_url:
-            return await status.edit("❌ Failed to generate image.")
+        user_id = message.from_user.id
+        chat_id = message.chat.id
+        temp_path = f"cache/{user_id}_{chat_id}_{message.id}.jpg"
 
         final_path = await download_from_url(temp_path, image_url)
         if not final_path:
