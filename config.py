@@ -32,7 +32,7 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 API_URL = getenv("API_URL") # optional
 API_KEY = getenv("API_KEY") # optional
 COOKIE_URL = getenv("COOKIE_URL") # necessary
-YOUR_IMGGEN_API_KEY = getenv("YOUR_IMGGEN_API_KEY") # optional
+PIXELCUT_API_KEY = "sk_d4eec359f0f545d68f470db5dab61c74"
 
 # ───── Heroku Configuration ───── #
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
