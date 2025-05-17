@@ -1,11 +1,14 @@
-import os import aiohttp import aiofiles
+import os
+import aiohttp
+import aiofiles
 
-from config import DEEP_API as YOUR_IMGGEN_API_KEY from ANNIEMUSIC import app from pyrogram import filters from pyrogram.types import Message
+from config import YOUR_IMGGEN_API_KEY
+from ANNIEMUSIC import app
+from pyrogram import filters
+from pyrogram.types import Message
 
 async def download_from_url(path: str, url: str) -> str: os.makedirs(os.path.dirname(path), exist_ok=True) async with aiohttp.ClientSession() as session: async with session.get(url) as resp: if resp.status == 200: async with aiofiles.open(path, mode="wb") as f: await f.write(await resp.read()) return path return None
-
 async def post_file(url: str, file_path: str, headers: dict): async with aiohttp.ClientSession() as session: with open(file_path, 'rb') as f: form = aiohttp.FormData() form.add_field('image', f, filename=os.path.basename(file_path), content_type='application/octet-stream')
-
 async with session.post(url, data=form, headers=headers) as resp:
             return await resp.json()
 
