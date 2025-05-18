@@ -1,59 +1,49 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
-import httpx
-from ANNIEMUSIC import app  # Replace with your actual Client instance if different
+import requests
+from SHUKLAMUSIC import app
 
-
-# Function to split long messages into chunks
+# Function to chunk the repository info into smaller parts
 def chunk_string(text, chunk_size):
     return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
 
-
-# Command handler for /allrepo
 @app.on_message(filters.command("allrepo"))
-async def all_repo_command(client: Client, message: Message):
-    if len(message.command) < 2:
-        return await message.reply_text(
-            "❌ Please enter a GitHub username.\n\n**Example:** `/allrepo GitHubUsername`"
-        )
-
-    username = message.command[1].strip()
-
+async def all_repo_command(client, message):
     try:
-        repo_info = await get_all_repository_info(username)
+        # Check if there is a GitHub username after the /giverepo command
+        if len(message.command) > 1:
+            github_username = message.command[1]
 
-        if not repo_info:
-            return await message.reply_text("❌ No public repositories found or user does not exist.")
+            # Fetch information about all repositories of the GitHub user
+            repo_info = get_all_repository_info(github_username)
 
-        chunks = chunk_string(repo_info, 4000)
-        for chunk in chunks:
-            await message.reply_text(chunk, disable_web_page_preview=True)
+            # Split repository info into smaller chunks
+            chunked_repo_info = chunk_string(repo_info, 4000)  # Split into chunks of 4000 characters
 
+            # Send the repository information in chunks as separate messages
+            for chunk in chunked_repo_info:
+                await message.reply_text(chunk)
+        else:
+            await message.reply_text("Please enter a GitHub username after the /allrepo command.")
     except Exception as e:
-        print(f"Error in /allrepo: {e}")
-        await message.reply_text("⚠️ An error occurred while fetching repositories.")
+        await message.reply_text(f"An error occurred: {str(e)}")
+#######
 
+def get_all_repository_info(github_username):
+    # Set up the GitHub API URL for user repositories
+    github_api_url = f"https://api.github.com/users/{github_username}/repos"
 
-# Function to fetch repository data from GitHub API
-async def get_all_repository_info(username: str) -> str:
-    url = f"https://api.github.com/users/{username}/repos"
-    async with httpx.AsyncClient(timeout=10.0) as client:
-        response = await client.get(url)
-
-    if response.status_code != 200:
-        return None
-
+    # Perform the request to the GitHub API
+    response = requests.get(github_api_url)
     data = response.json()
-    if not data:
-        return None
 
-    info_lines = []
-    for repo in data:
-        info_lines.append(
-            f"🔹 **[{repo['name']}]({repo['html_url']})**\n"
-            f"⭐ Stars: `{repo['stargazers_count']}` | 🍴 Forks: `{repo['forks_count']}`\n"
-            f"📄 {repo['description'] or 'No description'}"
-        )
+    # Extract relevant information from the response
+    repo_info = "\n\n".join([
+        f"Repository: {repo['full_name']}\n"
+        f"Description: {repo['description']}\n"
+        f"Stars: {repo['stargazers_count']}\n"
+        f"Forks: {repo['forks_count']}\n"
+        f"URL: {repo['html_url']}"
+        for repo in data
+    ])
 
-    profile_link = f"👤 [View GitHub Profile](https://github.com/{username})"
-    return f"{profile_link}\n\n" + "\n\n".join(info_lines)
+    return repo_info
