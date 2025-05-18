@@ -1,59 +1,68 @@
+"""**
+MIT License
+
+Copyright (c) [All] [STRANGER TEAM]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION**
+"""
+
+
+
+
+
 from pyrogram import Client, filters
-from pyrogram.types import Message
-from pyrogram.enums import ParseMode
 import git
 import shutil
 import os
-from ANNIEMUSIC import app
+from SHUKLAMUSIC import app
+
+
 
 @app.on_message(filters.command(["downloadrepo"]))
-async def download_repo(client: Client, message: Message):
+def download_repo(_, message):
     if len(message.command) != 2:
-        return await message.reply_text(
-            "❌ Please provide a valid GitHub repository URL.\n\n"
-            "Example: `/downloadrepo https://github.com/kayak/pypika`",
-            parse_mode=ParseMode.MARKDOWN
-        )
+        message.reply_text("Please provide the GitHub repository URL after the command. Example: /downloadrepo Repo Url ")
+        return
 
     repo_url = message.command[1]
-    status_msg = await message.reply_text("⏬ Cloning the repository...")
-
-    zip_path = await clone_and_zip_repo(repo_url)
+    zip_path = download_and_zip_repo(repo_url)
 
     if zip_path:
-        try:
-            await message.reply_document(
-                zip_path,
-                caption="✅ Repository downloaded and zipped."
-            )
-        except Exception as e:
-            await message.reply_text(
-                f"❌ Failed to send file: `{e}`",
-                parse_mode=ParseMode.MARKDOWN
-            )
-        finally:
-            os.remove(zip_path)
+        with open(zip_path, "rb") as zip_file:
+            message.reply_document(zip_file)
+        os.remove(zip_path)
     else:
-        await message.reply_text(
-            "❌ Unable to download the specified GitHub repository.",
-            parse_mode=ParseMode.MARKDOWN
-        )
+        message.reply_text("Unable to download the specified GitHub repository.")
 
-    await status_msg.delete()
 
-async def clone_and_zip_repo(repo_url: str) -> str | None:
-    repo_name = repo_url.rstrip("/").split("/")[-1].replace(".git", "")
-    repo_path = repo_name
-
+def download_and_zip_repo(repo_url):
     try:
-        git.Repo.clone_from(repo_url, repo_path)
-        zip_file = shutil.make_archive(repo_path, 'zip', repo_path)
-        return zip_file
-    except git.exc.GitCommandError as e:
-        print(f"Git error: {e}")
-        return None
+        repo_name = repo_url.split("/")[-1].replace(".git", "")
+        repo_path = f"{repo_name}"
+        
+        # Clone the repository
+        repo = git.Repo.clone_from(repo_url, repo_path)
+        
+        # Create a zip file of the repository
+        shutil.make_archive(repo_path, 'zip', repo_path)
+
+        return f"{repo_path}.zip"
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        print(f"Error downloading and zipping GitHub repository: {e}")
         return None
     finally:
         if os.path.exists(repo_path):
