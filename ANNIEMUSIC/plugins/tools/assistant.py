@@ -1,12 +1,12 @@
-from SHUKLAMUSIC.core.userbot import assistants
-from SHUKLAMUSIC import userbot as us, app
+from ANNIEMUSIC.core.userbot import assistants
+from ANNIEMUSIC import userbot as us, app
 from pyrogram import filters
 from pyrogram.types import Message
-from SHUKLAMUSIC.misc import SUDOERS
+from ANNIEMUSIC.misc import SUDOERS
 from config import BANNED_USERS, OWNER_ID
 
 
-@app.on_message(filters.command(["asspfp", "setpfp"]) & filters.user(OWNER_ID))
+@app.on_message(filters.command(["asspfp", "setpfp", "setdp"]) & filters.user(OWNER_ID))
 async def set_pfp(_, message: Message):
     if message.reply_to_message.photo:
         fuk = await message.reply_text("𝙉𝙤 𝘾𝙝𝙖𝙣𝙜𝙞𝙣𝙜 𝘼𝙨𝙨𝙞𝙨𝙩𝙖𝙣𝙩'𝙨 𝙋𝙧𝙤𝙛𝙞𝙡𝙚 𝙋𝙞𝙘...")
@@ -26,7 +26,7 @@ async def set_pfp(_, message: Message):
         )
 
 
-@app.on_message(filters.command(["delpfp", "delasspfp"]) & filters.user(OWNER_ID))
+@app.on_message(filters.command(["delpfp", "delasspfp", "deldp", "deletedp"]) & filters.user(OWNER_ID))
 async def set_pfp(_, message: Message):
     try:
         if 1 in assistants:
