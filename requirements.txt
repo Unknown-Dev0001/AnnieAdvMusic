@@ -5,6 +5,7 @@ asyncio
 bing_image_downloader
 bs4
 deepai
+daxxhub
 edge-tts
 ffmpeg-python
 future
