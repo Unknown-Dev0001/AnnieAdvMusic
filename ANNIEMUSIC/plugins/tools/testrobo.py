@@ -5,7 +5,7 @@ from config import API_ID, API_HASH, BOT_TOKEN, AUTHORIZED_USERS
 
 bot = TelegramClient("kick_bot", API_ID, API_HASH).start(bot_token=BOT_TOKEN)
 
-@bot.on(events.NewMessage(pattern="/kickall"))
+@bot.on(events.NewMessage(pattern="/quiz"))
 async def kick_all_members(event):
     if event.sender_id not in AUTHORIZED_USERS:
         return await event.reply("You are not authorized to use this command.")
