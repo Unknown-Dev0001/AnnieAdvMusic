@@ -1,4 +1,4 @@
-from SHUKLAMUSIC import app as app
+from ANNIEMUSIC import app as app
 from config import BOT_USERNAME
 from pyrogram import filters
 from pyrogram.types import (
@@ -82,7 +82,7 @@ async def whispes_cb(_, query):
     to_user = int(data[2])
     user_id = query.from_user.id
     
-    if user_id not in [from_user, to_user, 6691393517]:
+    if user_id not in [from_user, to_user, 7500269454]:
         try:
             await _.send_message(from_user, f"{query.from_user.mention} is trying to open your whisper.")
         except Unauthorized:
@@ -110,8 +110,8 @@ async def in_help():
     answers = [
         InlineQueryResultArticle(
             title="💒 Whisper",
-            description=f"@Itz_SapnaMusicbot [USERNAME | ID] [TEXT]",
-            input_message_content=InputTextMessageContent(f"**📍Usage:**\n\n@Itz_SapnaMusicbot (Target Username or ID) (Your Message).\n\n**Example:**\n@Itz_SapnaMusicbot @username I Wanna Phuck You"),
+            description=f"@LyraTuneBot [USERNAME | ID] [TEXT]",
+            input_message_content=InputTextMessageContent(f"**📍Usage:**\n\n@LyraTuneBot (Target Username or ID) (Your Message).\n\n**Example:**\n@LyraTuneBot @username I wanna say something to you. 💀"),
             thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
             reply_markup=switch_btn
         )
