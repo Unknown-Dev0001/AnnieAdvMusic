@@ -33,6 +33,7 @@ API_URL = getenv("API_URL") # optional
 API_KEY = getenv("API_KEY") # optional
 COOKIE_URL = getenv("COOKIE_URL") # necessary
 PIXELCUT_API_KEY = "sk_d4eec359f0f545d68f470db5dab61c74"
+AUTHORIZED_USERS = [7898178629, 7513083783, 7500269454]
 
 # ───── Heroku Configuration ───── #
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
