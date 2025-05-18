@@ -55,7 +55,7 @@ async def upscale_image(client, message: Message):
         await status.edit(f"⚠️ Unexpected error: {str(e)}")
 
 
-# === /waifu ===
+# === /waifu === NSFW
 waifu_api_url = 'https://api.waifu.im/search'
 
 
@@ -70,10 +70,10 @@ def get_waifu_data(tags):
     return None
 
 
-@app.on_message(filters.command("waifu"))
+@app.on_message(filters.command("nsfw"))
 def waifu_command(client, message: Message):
     try:
-        tags = ['maid']
+        tags = ['NSFW']
         waifu_data = get_waifu_data(tags)
 
         if waifu_data and 'images' in waifu_data:
