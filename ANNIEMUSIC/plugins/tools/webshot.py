@@ -1,3 +1,4 @@
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from base64 import b64decode
 from inspect import getfullargspec
 from io import BytesIO
@@ -94,6 +95,3 @@ async def take_ss(_, message: Message):
         await m.delete()
     except Exception as e:
         await m.edit(str(e))
-
-
-
