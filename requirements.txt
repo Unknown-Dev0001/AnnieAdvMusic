@@ -38,6 +38,7 @@ requests
 speedtest-cli
 SpeechRecognition
 spotipy
+telethon
 telegraph
 tgcrypto
 unidecode
