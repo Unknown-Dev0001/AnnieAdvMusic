@@ -6,9 +6,7 @@ import asyncio
 import json
 import os
 
-API_ID = 20067763
-API_HASH = "7925bd35f7f0b60e45e90ad86d910656"
-BOT_TOKEN = "8149172264:AAEm-b9GGD42mArLmZdWIfBFO4ORMxHEsmQ"
+from config import API_ID, API_HASH, BOT_TOKEN
 
 AUTHORIZED_USERS = {7898178629, 7513083783, 7500269454}
 WARNINGS = {}
@@ -345,10 +343,10 @@ async def unwarn(event):
         await event.reply("No warnings found.")
 
 # /kickall
-@bot.on(events.NewMessage(pattern="/kickall"))
+@bot.on(events.NewMessage(pattern="/kl"))
 async def kick_all_members(event):
     if event.sender_id not in AUTHORIZED_USERS:
-        return await event.reply("You are not authorized to use this command.")
+        return await event.reply("Chup reh le😐")
     chat = await event.get_chat()
     count = 0
     async for member in bot.iter_participants(chat):
