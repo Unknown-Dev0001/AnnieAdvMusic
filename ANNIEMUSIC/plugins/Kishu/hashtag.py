@@ -1,10 +1,10 @@
 import requests
 from bs4 import BeautifulSoup as  BSP
-from SHUKLAMUSIC import app as SHUKLA
+from ANNIEMUSIC import app as LRYA
 from pyrogram import filters
 url = "https://all-hashtag.com/library/contents/ajax_generator.php"
 
-@SHUKLA.on_message(filters.command("hastag"))
+@LRYA.on_message(filters.command("hashtag"))
 async def hastag(bot, message):
     global content
     try:
