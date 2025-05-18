@@ -1,32 +1,36 @@
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from base64 import b64decode
 from inspect import getfullargspec
 from io import BytesIO
-import requests
-from aiohttp import ClientSession
+import asyncio
+import aiohttp
 from pyrogram import filters
-from pyrogram.types import *
 from ANNIEMUSIC import app
 
 button = InlineKeyboardMarkup([[
-            InlineKeyboardButton("⌯ ᴄʟᴏsᴇ ⌯", callback_data="close_data")
-                              ]])
+    InlineKeyboardButton("⌯ ᴄʟᴏsᴇ ⌯", callback_data="close_data")
+]])
 
+# Helper: reply or edit depending on context
+async def eor(msg: Message, **kwargs):
+    func = (
+        (msg.edit_text if msg.from_user.is_self else msg.reply)
+        if msg.from_user
+        else msg.reply
+    )
+    spec = getfullargspec(func.__wrapped__).args
+    return await func(**{k: v for k, v in kwargs.items() if k in spec})
 
-
-aiohttpsession = ClientSession()
-
-
+# POST request with session
 async def post(url: str, *args, **kwargs):
-    async with aiohttpsession.post(url, *args, **kwargs) as resp:
-        try:
-            data = await resp.json()
-        except Exception:
-            data = await resp.text()
-    return data
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, *args, **kwargs) as resp:
+            try:
+                return await resp.json()
+            except Exception:
+                return await resp.text()
 
-
-
+# Screenshot logic
 async def take_screenshot(url: str, full: bool = False):
     url = "https://" + url if not url.startswith("http") else url
     payload = {
@@ -38,46 +42,26 @@ async def take_screenshot(url: str, full: bool = False):
     }
     if full:
         payload["full"] = True
-    data = await post(
-        "https://webscreenshot.vercel.app/api",
-        data=payload,
-    )
+
+    data = await post("https://webscreenshot.vercel.app/api", data=payload)
+
     if "image" not in data:
         return None
+
     b = data["image"].replace("data:image/jpeg;base64,", "")
     file = BytesIO(b64decode(b))
     file.name = "webss.jpg"
     return file
 
-
-async def eor(msg: Message, **kwargs):
-    func = (
-        (msg.edit_text if msg.from_user.is_self else msg.reply)
-        if msg.from_user
-        else msg.reply
-    )
-    spec = getfullargspec(func.__wrapped__).args
-    return await func(**{k: v for k, v in kwargs.items() if k in spec})
-
-
+# Command Handler
 @app.on_message(filters.command(["webss", "ss", "webshot"]))
 async def take_ss(_, message: Message):
     if len(message.command) < 2:
         return await eor(message, text="**ɢɪᴠᴇ ᴀ ᴜʀʟ ᴛᴏ ғᴇᴛᴄʜ sᴄʀᴇᴇɴsʜᴏᴛ.**")
 
-    if len(message.command) == 2:
-        url = message.text.split(None, 1)[1]
-        full = False
-    elif len(message.command) == 3:
-        url = message.text.split(None, 2)[1]
-        full = message.text.split(None, 2)[2].lower().strip() in [
-            "yes",
-            "y",
-            "1",
-            "true",
-        ]
-    else:
-        return await eor(message, text="**ɪɴᴠᴀʟɪᴅ ᴄᴏᴍᴍᴀɴᴅ.**")
+    parts = message.text.split(None, 2)
+    url = parts[1]
+    full = len(parts) == 3 and parts[2].lower().strip() in ["yes", "y", "1", "true"]
 
     m = await eor(message, text="**ᴄᴀᴘᴛᴜʀɪɴɢ sᴄʀᴇᴇɴsʜᴏᴛ...**")
 
@@ -86,12 +70,8 @@ async def take_ss(_, message: Message):
         if not photo:
             return await m.edit("**ғᴀɪʟᴇᴅ ᴛᴏ ᴛᴀᴋᴇ sᴄʀᴇᴇɴsʜᴏᴛ.**")
 
-        m = await m.edit("**ᴜᴘʟᴏᴀᴅɪɴɢ...**")
-
-        if not full:
-            await message.reply_photo(photo, reply_markup=button)
-        else:
-            await message.reply_photo(photo, reply_markup=button)
+        await m.edit("**ᴜᴘʟᴏᴀᴅɪɴɢ...**")
+        await message.reply_photo(photo, reply_markup=button)
         await m.delete()
     except Exception as e:
-        await m.edit(str(e))
+        await m.edit(f"**Error:** `{str(e)}`")
