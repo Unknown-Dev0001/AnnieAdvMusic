@@ -1,4 +1,4 @@
-from ANNIEMUSIC import app as app
+from ANNIEMUSIC import app
 from config import BOT_USERNAME
 from pyrogram import filters
 from pyrogram.types import (
@@ -35,7 +35,7 @@ async def _whisper(_, inline_query):
 
         try:
             user = await _.get_users(user_id)
-        except:
+        except Exception:
             mm = [
                 InlineQueryResultArticle(
                     title="💒 Whisper",
@@ -72,7 +72,7 @@ async def _whisper(_, inline_query):
             ]
             try:
                 whisper_db[f"{inline_query.from_user.id}_{user.id}"] = msg
-            except:
+            except Exception:
                 pass
 
     results.extend(mm)
@@ -89,7 +89,7 @@ async def whispes_cb(_, query):
     if user_id not in [from_user, to_user, 7500269454]:
         try:
             await _.send_message(from_user, f"{query.from_user.mention} is trying to open your whisper.")
-        except:
+        except Exception:
             pass
         return await query.answer("This whisper is not for you 🚧", show_alert=True)
 
@@ -102,8 +102,10 @@ async def whispes_cb(_, query):
 
     if len(data) > 3 and data[3] == "one":
         if user_id == to_user:
-            await query.edit_message_text("📬 Whisper has been read!\n\nPress the button below to send a whisper!",
-                                          reply_markup=SWITCH)
+            await query.edit_message_text(
+                "📬 Whisper has been read!\n\nPress the button below to send a whisper!",
+                reply_markup=SWITCH
+            )
 
 
 async def in_help():
