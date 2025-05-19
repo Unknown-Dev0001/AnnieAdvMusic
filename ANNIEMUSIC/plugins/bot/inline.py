@@ -6,9 +6,8 @@ from pyrogram.types import (
 from youtubesearchpython.__future__ import VideosSearch
 
 from ANNIEMUSIC import app
-from config import BANNED_USERS
-from whisper import _whisper, in_help  # Import your whisper functions
-from config import BOT_USERNAME
+from config import BANNED_USERS, BOT_USERNAME
+from ANNIEMUSIC.plugins.tools.whisper import _whisper, in_help  # Corrected import path
 
 
 @app.on_inline_query(~BANNED_USERS)
