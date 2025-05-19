@@ -28,9 +28,9 @@ async def _whisper(_, inline_query):
         try:
             user_id = data.split()[0]
             msg = data.split(None, 1)[1]
-        except IndexError as e:
-            pass
-        
+        except IndexError:
+            user_id, msg = None, None
+
         try:
             user = await _.get_users(user_id)
         except:
@@ -43,8 +43,7 @@ async def _whisper(_, inline_query):
                     reply_markup=switch_btn
                 )
             ]
-        
-        try:
+        else:
             whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💒 Whisper", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}")]])
             one_time_whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("🔩 One-Time Whisper", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}_one")]])
             mm = [
@@ -63,15 +62,12 @@ async def _whisper(_, inline_query):
                     reply_markup=one_time_whisper_btn
                 )
             ]
-        except:
-            pass
-        
-        try:
-            whisper_db[f"{inline_query.from_user.id}_{user.id}"] = msg
-        except:
-            pass
-    
-    results.append(mm)
+            try:
+                whisper_db[f"{inline_query.from_user.id}_{user.id}"] = msg
+            except:
+                pass
+
+    results.extend(mm)  # FIXED HERE
     return results
 
 
@@ -85,9 +81,8 @@ async def whispes_cb(_, query):
     if user_id not in [from_user, to_user, 7500269454]:
         try:
             await _.send_message(from_user, f"{query.from_user.mention} is trying to open your whisper.")
-        except Unauthorized:
+        except:
             pass
-        
         return await query.answer("This whisper is not for you 🚧", show_alert=True)
     
     search_msg = f"{from_user}_{to_user}"
@@ -110,8 +105,8 @@ async def in_help():
     answers = [
         InlineQueryResultArticle(
             title="💒 Whisper",
-            description=f"@LyraTuneBot [USERNAME | ID] [TEXT]",
-            input_message_content=InputTextMessageContent(f"**📍Usage:**\n\n@LyraTuneBot (Target Username or ID) (Your Message).\n\n**Example:**\n@LyraTuneBot @username I wanna say something to you. 💀"),
+            description=f"@{BOT_USERNAME} [USERNAME | ID] [TEXT]",
+            input_message_content=InputTextMessageContent(f"**📍Usage:**\n\n@{BOT_USERNAME} (Target Username or ID) (Your Message).\n\n**Example:**\n@{BOT_USERNAME} @username I wanna say something to you. 💀"),
             thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
             reply_markup=switch_btn
         )
@@ -128,5 +123,4 @@ async def bot_inline(_, inline_query):
         await inline_query.answer(answers)
     else:
         answers = await _whisper(_, inline_query)
-        await inline_query.answer(answers[-1], cache_time=0)
-                                               
+        await inline_query.answer(answers, cache_time=0)  # FIXED to pass full list, not just last element
