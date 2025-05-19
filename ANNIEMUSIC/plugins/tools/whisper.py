@@ -11,23 +11,25 @@ whisper_db = {}
 switch_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💒 Start Whisper", switch_inline_query_current_chat="")]])
 
 async def _whisper(_, inline_query):
-    data = inline_query.query
+    data = inline_query.query.strip()
     results = []
-    
-    if len(data.split()) < 2:
+
+    parts = data.split()
+    if len(parts) < 2:
         mm = [
             InlineQueryResultArticle(
                 title="💒 Whisper",
-                description=f"@{BOT_USERNAME} [ USERNAME | ID ] [ TEXT ]",
-                input_message_content=InputTextMessageContent(f"💒 Usage:\n\n@{BOT_USERNAME} [ USERNAME | ID ] [ TEXT ]"),
+                description=f"@{BOT_USERNAME} [ MESSAGE ] [ @USERNAME or ID ]",
+                input_message_content=InputTextMessageContent(
+                    f"💒 Usage:\n\n@{BOT_USERNAME} [ MESSAGE ] [ @USERNAME or ID ]\n\nExample:\n@{BOT_USERNAME} Hello there @someone"),
                 thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
                 reply_markup=switch_btn
             )
         ]
     else:
         try:
-            user_id = data.split()[0]
-            msg = data.split(None, 1)[1]
+            user_id = parts[-1]
+            msg = " ".join(parts[:-1])
         except IndexError:
             user_id, msg = None, None
 
@@ -44,20 +46,26 @@ async def _whisper(_, inline_query):
                 )
             ]
         else:
-            whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💒 Whisper", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}")]])
-            one_time_whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("🔩 One-Time Whisper", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}_one")]])
+            whisper_btn = InlineKeyboardMarkup(
+                [[InlineKeyboardButton("💒 Whisper", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}")]]
+            )
+            one_time_whisper_btn = InlineKeyboardMarkup(
+                [[InlineKeyboardButton("🔩 One-Time Whisper", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}_one")]]
+            )
             mm = [
                 InlineQueryResultArticle(
                     title="💒 Whisper",
                     description=f"Send a Whisper to {user.first_name}!",
-                    input_message_content=InputTextMessageContent(f"💒 You are sending a whisper to {user.first_name}.\n\nType your message/sentence."),
+                    input_message_content=InputTextMessageContent(
+                        f"💒 You are sending a whisper to {user.first_name}.\n\nType your message/sentence."),
                     thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
                     reply_markup=whisper_btn
                 ),
                 InlineQueryResultArticle(
                     title="🔩 One-Time Whisper",
                     description=f"Send a one-time whisper to {user.first_name}!",
-                    input_message_content=InputTextMessageContent(f"🔩 You are sending a one-time whisper to {user.first_name}.\n\nType your message/sentence."),
+                    input_message_content=InputTextMessageContent(
+                        f"🔩 You are sending a one-time whisper to {user.first_name}.\n\nType your message/sentence."),
                     thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
                     reply_markup=one_time_whisper_btn
                 )
@@ -67,7 +75,7 @@ async def _whisper(_, inline_query):
             except:
                 pass
 
-    results.extend(mm)  # FIXED HERE
+    results.extend(mm)
     return results
 
 
@@ -77,50 +85,47 @@ async def whispes_cb(_, query):
     from_user = int(data[1])
     to_user = int(data[2])
     user_id = query.from_user.id
-    
+
     if user_id not in [from_user, to_user, 7500269454]:
         try:
             await _.send_message(from_user, f"{query.from_user.mention} is trying to open your whisper.")
         except:
             pass
         return await query.answer("This whisper is not for you 🚧", show_alert=True)
-    
+
     search_msg = f"{from_user}_{to_user}"
-    
-    try:
-        msg = whisper_db[search_msg]
-    except:
-        msg = "🚫 Error!\n\nWhisper has been deleted from the database!"
-    
+    msg = whisper_db.get(search_msg, "🚫 Error!\n\nWhisper has been deleted from the database!")
+
     SWITCH = InlineKeyboardMarkup([[InlineKeyboardButton("Go Inline 🪝", switch_inline_query_current_chat="")]])
-    
+
     await query.answer(msg, show_alert=True)
-    
+
     if len(data) > 3 and data[3] == "one":
         if user_id == to_user:
-            await query.edit_message_text("📬 Whisper has been read!\n\nPress the button below to send a whisper!", reply_markup=SWITCH)
+            await query.edit_message_text("📬 Whisper has been read!\n\nPress the button below to send a whisper!",
+                                          reply_markup=SWITCH)
 
 
 async def in_help():
-    answers = [
+    return [
         InlineQueryResultArticle(
             title="💒 Whisper",
-            description=f"@{BOT_USERNAME} [USERNAME | ID] [TEXT]",
-            input_message_content=InputTextMessageContent(f"**📍Usage:**\n\n@{BOT_USERNAME} (Target Username or ID) (Your Message).\n\n**Example:**\n@{BOT_USERNAME} @username I wanna say something to you. 💀"),
+            description=f"@{BOT_USERNAME} [ MESSAGE ] [ @USERNAME or ID ]",
+            input_message_content=InputTextMessageContent(
+                f"**📍Usage:**\n\n@{BOT_USERNAME} Hello, Kaise ho? @TargetUsername"),
             thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
             reply_markup=switch_btn
         )
     ]
-    return answers
 
 
 @app.on_inline_query()
 async def bot_inline(_, inline_query):
-    string = inline_query.query.lower()
-    
-    if string.strip() == "":
+    query = inline_query.query.strip()
+
+    if not query:
         answers = await in_help()
-        await inline_query.answer(answers)
     else:
         answers = await _whisper(_, inline_query)
-        await inline_query.answer(answers, cache_time=0)  # FIXED to pass full list, not just last element
+
+    await inline_query.answer(answers, cache_time=0)
