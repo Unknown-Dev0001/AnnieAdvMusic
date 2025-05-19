@@ -57,7 +57,7 @@ async def _whisper(_, inline_query):
                     title="💒 Whisper",
                     description=f"Send a Whisper to {user.first_name}!",
                     input_message_content=InputTextMessageContent(
-                        f"💒 You are sending a whisper to {user.first_name}.\n\nType your message/sentence."),
+                        f"💒 You've sent a whisper to {user.first_name}."),
                     thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
                     reply_markup=whisper_btn
                 ),
@@ -65,7 +65,7 @@ async def _whisper(_, inline_query):
                     title="🔩 One-Time Whisper",
                     description=f"Send a one-time whisper to {user.first_name}!",
                     input_message_content=InputTextMessageContent(
-                        f"🔩 You are sending a one-time whisper to {user.first_name}.\n\nType your message/sentence."),
+                        f"🔩 You've sent a one-time whisper to {user.first_name}."),
                     thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
                     reply_markup=one_time_whisper_btn
                 )
@@ -103,7 +103,7 @@ async def whispes_cb(_, query):
     if len(data) > 3 and data[3] == "one":
         if user_id == to_user:
             await query.edit_message_text(
-                "📬 Whisper has been read!\n\nPress the button below to send a whisper!",
+                "📬 Whisper has been read!\n\nPress the button below to send a new whisper!",
                 reply_markup=SWITCH
             )
 
@@ -114,7 +114,7 @@ async def in_help():
             title="💒 Whisper",
             description=f"@{BOT_USERNAME} [ MESSAGE ] [ @USERNAME or ID ]",
             input_message_content=InputTextMessageContent(
-                f"**📍Usage:**\n\n@{BOT_USERNAME} Hello, Kaise ho? @TargetUsername"),
+                f"**📍Usage:**\n\n@{BOT_USERNAME} Hello, Kaise ho? @Username"),
             thumb_url="https://te.legra.ph/file/3eec679156a393c6a1053.jpg",
             reply_markup=switch_btn
         )
