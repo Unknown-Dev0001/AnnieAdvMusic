@@ -31,7 +31,7 @@ from ANNIEMUSIC.utils.decorators.language import LanguageStart
 from ANNIEMUSIC.utils.formatters import get_readable_time
 from ANNIEMUSIC.utils.inline.help import first_page
 from ANNIEMUSIC.utils.inline.start import private_panel, start_panel
-from config import AYUV, BANNED_USERS, START_IMG_URL
+from config import AYUV, BANNED_USERS, START_VIDS
 from strings import get_string
 
 ANNIE_VID = [
