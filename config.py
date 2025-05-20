@@ -14,7 +14,7 @@ OWNER_ID = int(getenv("OWNER_ID", 7500269454))
 OWNER_USERNAME = getenv("OWNER_USERNAME", "Unknown_RK01")
 BOT_USERNAME = getenv("BOT_USERNAME", "LyraTuneBot")
 BOT_NAME = getenv("BOT_NAME", "˹𝐋𝐫𝐲𝐚 ✘ 𝙼ᴜsɪᴄ˼ ♪")
-ASSUSERNAME = getenv("ASSUSERNAME", "MoonKnight_official")
+ASSUSERNAME = getenv("ASSUSERNAME", "LryaxAssistant")
 EVALOP = list(map(int, getenv("EVALOP", "8055384069").split()))
 
 # ───── Mongo & Logging ───── #
@@ -49,7 +49,7 @@ SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BotVerseRavi")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/BotVerseRaviSupport")
 
 # ───── Assistant Auto Leave ───── #
-AUTO_LEAVING_ASSISTANT = False
+AUTO_LEAVING_ASSISTANT = True
 AUTO_LEAVE_ASSISTANT_TIME = int(getenv("ASSISTANT_LEAVE_TIME", "11500"))
 
 # ───── Error Handling ───── #
