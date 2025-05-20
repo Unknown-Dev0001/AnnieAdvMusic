@@ -1,4 +1,9 @@
 from ANNIEMUSIC.utils.inlinequery import answer as cmd_answer  
+from ANNIEMUSIC.plugins.tools.whisper import _whisper
+from pyrogram.types import (
+    InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
+)
+from youtubesearchpython import VideosSearch
 from ANNIEMUSIC import app
 from config import BANNED_USERS
 
@@ -7,7 +12,7 @@ async def inline_query_handler(client, inline_query):
     query = inline_query.query.strip()
 
     if not query:
-        # Show CMD article buttons when query is empty
+        # Show CMD command buttons when query is empty
         await inline_query.answer(cmd_answer, cache_time=0)
         return
 
@@ -19,10 +24,10 @@ async def inline_query_handler(client, inline_query):
             try:
                 results = await _whisper(client, inline_query)
                 return await inline_query.answer(results, cache_time=0)
-            except:
+            except Exception:
                 pass
 
-    # Else perform YouTube search
+    # Else perform YouTube search for everything else
     try:
         a = VideosSearch(query, limit=20)
         result = (await a.next()).get("result", [])
@@ -62,4 +67,4 @@ async def inline_query_handler(client, inline_query):
             )
         await inline_query.answer(answers)
     except Exception:
-        return
+        pass
