@@ -1,4 +1,5 @@
 import requests
+import asyncio
 from ANNIEMUSIC import app
 from pyrogram import filters
 
@@ -9,7 +10,8 @@ async def joke(_, message):
     response = requests.get(JOKE_API_ENDPOINT)
     if response.status_code == 200:
         r = response.json()
-        joke_text = f"{r['setup']}\n\n{r['punchline']}"
+        setup_msg = await message.reply_text(f"**{r['setup']}**\n\n_Think about it...🤔_")
+        await asyncio.sleep(3)  # suspense delay
+        await setup_msg.edit_text(f"**{r['setup']}**\n\n**{r['punchline']}**")
     else:
-        joke_text = "Couldn't fetch a joke at the moment. Try again later!"
-    await message.reply_text(joke_text)
+        await message.reply_text("Couldn't fetch a joke at the moment. Try again later! 😢")
