@@ -1,4 +1,6 @@
-from ANNIEMUSIC.utils.inlinequery import answer as cmd_answer  # Import command buttons
+from ANNIEMUSIC.utils.inlinequery import answer as cmd_answer  
+from ANNIEMUSIC import app
+from config import BANNED_USERS
 
 @app.on_inline_query(~BANNED_USERS)
 async def inline_query_handler(client, inline_query):
