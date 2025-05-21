@@ -22,7 +22,7 @@ numpy
 opencv-python
 pillow==11.2.1
 psutil
-pytgcalls==2.2.0rc3
+pytgcalls
 pycryptodome
 pydub
 pyfiglet
