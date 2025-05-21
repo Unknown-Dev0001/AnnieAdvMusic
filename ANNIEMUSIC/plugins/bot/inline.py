@@ -1,11 +1,12 @@
+import re
 from ANNIEMUSIC.utils.inlinequery import answer as cmd_answer  
 from ANNIEMUSIC.plugins.tools.whisper import _whisper
-from pyrogram.types import (
-    InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
-)
+from pyrogram.types import InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
 from youtubesearchpython import VideosSearch
 from ANNIEMUSIC import app
 from config import BANNED_USERS
+
+whisper_syntax = re.compile(r".+ [@]?\w+$")
 
 @app.on_inline_query(~BANNED_USERS)
 async def inline_query_handler(client, inline_query):
@@ -16,16 +17,13 @@ async def inline_query_handler(client, inline_query):
         await inline_query.answer(cmd_answer, cache_time=0)
         return
 
-    # Check for whisper syntax (last word is @username or digit ID)
-    parts = query.split()
-    if len(parts) >= 2:
-        last = parts[-1]
-        if last.startswith("@") or last.isdigit():
-            try:
-                results = await _whisper(client, inline_query)
-                return await inline_query.answer(results, cache_time=0)
-            except Exception:
-                pass
+    if len(query.split()) >= 2 and whisper_syntax.match(query):
+        try:
+            results = await _whisper(client, inline_query)
+            return await inline_query.answer(results, cache_time=0)
+        except Exception:
+            await inline_query.answer(cmd_answer, cache_time=0)
+            return
 
     # Else perform YouTube search for everything else
     try:
@@ -67,4 +65,4 @@ async def inline_query_handler(client, inline_query):
             )
         await inline_query.answer(answers)
     except Exception:
-        pass
+        await inline_query.answer(cmd_answer, cache_time=0)
