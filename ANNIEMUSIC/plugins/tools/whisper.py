@@ -18,8 +18,9 @@ async def _whisper(_, inline_query):
     data = inline_query.query.strip()
     results = []
 
-    parts = data.split()
-    if len(parts) < 3:
+    # Split only once from right to get message and user_id
+    parts = data.rsplit(" ", 1)
+    if len(parts) != 2:
         return [
             InlineQueryResultArticle(
                 title="💒 Whisper",
@@ -32,9 +33,9 @@ async def _whisper(_, inline_query):
             )
         ]
 
+    msg, user_id = parts
+
     try:
-        user_id = parts[-1]
-        msg = " ".join(parts[1:-1])  # skip the bot username, get message
         user = await _.get_users(user_id)
     except Exception:
         return [
@@ -77,6 +78,7 @@ async def _whisper(_, inline_query):
         ),
     ]
 
+
 @app.on_callback_query(filters.regex(pattern=r"fdaywhisper_(.*)"))
 async def whisper_callback(_, query):
     data = query.data.split("_")
@@ -84,7 +86,7 @@ async def whisper_callback(_, query):
     to_user = int(data[2])
     user_id = query.from_user.id
 
-    if user_id not in [from_user, to_user, 7500269454]:  # replace 7500269454 with your OWNER_ID
+    if user_id not in [from_user, to_user, 7500269454]:  # Replace 7500269454 with your OWNER_ID
         try:
             await _.send_message(from_user, f"{query.from_user.mention} tried to open your whisper.")
         except:
@@ -100,6 +102,7 @@ async def whisper_callback(_, query):
             "📬 Whisper has been read!\n\nTap below to send a new one!",
             reply_markup=switch_btn,
         )
+
 
 async def in_help():
     return [
