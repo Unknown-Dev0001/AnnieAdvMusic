@@ -1,6 +1,7 @@
 aiofiles
 aiohttp
 apscheduler
+asyncio
 bing_image_downloader
 bs4
 deepai
@@ -22,7 +23,8 @@ numpy
 opencv-python
 pillow==11.2.1
 psutil
-pytgcalls
+pytgcalls==2.2.0
+tgcalls==2.0.0
 pycryptodome
 pydub
 pyfiglet
