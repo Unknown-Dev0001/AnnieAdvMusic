@@ -21,52 +21,33 @@ async def eor(msg: Message, **kwargs):
     spec = getfullargspec(func.__wrapped__).args
     return await func(**{k: v for k, v in kwargs.items() if k in spec})
 
-# POST request with session
-async def post(url: str, *args, **kwargs):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, *args, **kwargs) as resp:
-            try:
-                return await resp.json()
-            except Exception:
-                return await resp.text()
-
-# Screenshot logic
-async def take_screenshot(url: str, full: bool = False):
+# Screenshot logic with Abstract API
+async def take_screenshot(url: str):
     url = "https://" + url if not url.startswith("http") else url
-    payload = {
-        "url": url,
-        "width": 1100,
-        "height": 1900,
-        "scale": 1,
-        "format": "jpeg",
-    }
-    if full:
-        payload["full"] = True
+    full_url = f"https://screenshot.abstractapi.com/v1/?api_key=bec04934e07441bb86504e1149a88232&url={url}"
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.get(full_url) as resp:
+            if resp.status != 200:
+                return None
+            image = await resp.read()
 
-    data = await post("https://webscreenshot.vercel.app/api", data=payload)
-
-    if "image" not in data:
-        return None
-
-    b = data["image"].replace("data:image/jpeg;base64,", "")
-    file = BytesIO(b64decode(b))
+    file = BytesIO(image)
     file.name = "webss.jpg"
     return file
 
 # Command Handler
-@app.on_message(filters.command(["webss", "ss", "webshot"]))
+@app.on_message(filters.command(["webss", "ss", "web"]))
 async def take_ss(_, message: Message):
     if len(message.command) < 2:
         return await eor(message, text="**ɢɪᴠᴇ ᴀ ᴜʀʟ ᴛᴏ ғᴇᴛᴄʜ sᴄʀᴇᴇɴsʜᴏᴛ.**")
 
-    parts = message.text.split(None, 2)
-    url = parts[1]
-    full = len(parts) == 3 and parts[2].lower().strip() in ["yes", "y", "1", "true"]
+    url = message.text.split(None, 1)[1]
 
     m = await eor(message, text="**ᴄᴀᴘᴛᴜʀɪɴɢ sᴄʀᴇᴇɴsʜᴏᴛ...**")
 
     try:
-        photo = await take_screenshot(url, full)
+        photo = await take_screenshot(url)
         if not photo:
             return await m.edit("**ғᴀɪʟᴇᴅ ᴛᴏ ᴛᴀᴋᴇ sᴄʀᴇᴇɴsʜᴏᴛ.**")
 
