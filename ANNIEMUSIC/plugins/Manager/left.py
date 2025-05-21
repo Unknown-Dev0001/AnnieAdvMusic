@@ -1,4 +1,4 @@
-from SHUKLAMUSIC import app
+from ANNIEMUSIC import app
 from pyrogram import Client, filters
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
@@ -52,8 +52,8 @@ async def get_userinfo_img(
 
 # --------------------------------------------------------------------------------- #
 
-bg_path = "SHUKLAMUSIC/assets/userinfo.png"
-font_path = "SHUKLAMUSIC/assets/hiroko.ttf"
+bg_path = "ANNIEMUSIC/assets/userinfo.png"
+font_path = "ANNIEMUSIC/assets/default.ttf"
 
 # --------------------------------------------------------------------------------- #
 
