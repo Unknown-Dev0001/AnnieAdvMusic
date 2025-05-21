@@ -24,7 +24,8 @@ opencv-python
 pillow==11.2.1
 psutil
 ntgcalls==1.3.4
-py-tgcalls==2.1.1
+PIL
+pytgcalls==2.2.0rc3
 pycryptodome
 pydub
 pyfiglet
@@ -38,7 +39,6 @@ requests
 speedtest-cli
 SpeechRecognition
 spotipy
-telethon
 telegraph
 tgcrypto
 unidecode
