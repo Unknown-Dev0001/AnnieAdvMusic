@@ -70,10 +70,10 @@ def get_waifu_data(tags):
     return None
 
 
-@app.on_message(filters.command("nsfw"))
+@app.on_message(filters.command("animepic"))
 def waifu_command(client, message: Message):
     try:
-        tags = ['NSFW']
+        tags = ['maid']
         waifu_data = get_waifu_data(tags)
 
         if waifu_data and 'images' in waifu_data:
