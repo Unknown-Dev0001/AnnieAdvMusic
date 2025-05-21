@@ -12,6 +12,6 @@ async def joke(_, message):
         r = response.json()
         setup_msg = await message.reply_text(f"**{r['setup']}**\n\nThink about it...🤔")
         await asyncio.sleep(3)  # suspense delay
-        await setup_msg.edit_text(f"**{r['setup']}**\n\n**{r['punchline']}**")
+        await setup_msg.edit_text(f"**{r['setup']}**\n\n**{r['punchline']}** 🤪😂🤣")
     else:
         await message.reply_text("Couldn't fetch a joke at the moment. Try again later! 😢")
