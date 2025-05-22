@@ -7,10 +7,10 @@ from PIL import Image
 from pyrogram import filters
 from pyrogram.types import Message
 
-from SHUKLAMUSIC import app
-from SHUKLAMUSIC.utils.errors import capture_err
+from ANNIEMUSIC import app
+from ANNIEMUSIC.utils.errors import capture_err
 
-from SHUKLAMUSIC.core.sections import section
+from ANNIEMUSIC.core.sections import section
 
 
 async def convert(
@@ -37,7 +37,7 @@ async def convert(
         img.save(img_path, "JPEG", quality=100)
 
     pdf = BytesIO(img2pdf.convert(documents))
-    pdf.name = "SHUKLA.pdf"
+    pdf.name = "Lrya.pdf"
 
     if len(main_message.command) >= 2:
         names = main_message.text.split(None, 1)[1]
