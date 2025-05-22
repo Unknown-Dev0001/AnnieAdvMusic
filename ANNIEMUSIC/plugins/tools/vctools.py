@@ -6,23 +6,23 @@ from pyrogram import Client, filters
 from pyrogram.raw.functions.channels import GetFullChannel
 from pyrogram.raw.functions.messages import GetFullChat
 from pyrogram.raw.types import InputGroupCall, InputPeerChannel, InputPeerChat
-from SHUKLAMUSIC.utils.database import *
+from ANNIEMUSIC.utils.database import *
 from pyrogram.raw.functions.phone import CreateGroupCall, DiscardGroupCall
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, ChatAdminRequired
-from SHUKLAMUSIC import app, Userbot
+from ANNIEMUSIC import app, Userbot
 from typing import List, Union
 from pyrogram import filters
-from SHUKLAMUSIC.core.call import SHUKLA
+from ANNIEMUSIC.core.call import ANNIE
 from pyrogram.types import VideoChatEnded, Message
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from pytgcalls.exceptions import (NoActiveGroupCall, TelegramServerError, AlreadyJoinedError)
 
-@app.on_message(filters.command(["vcinfo"], ["/", "!"]))
+@app.on_message(filters.command(["vcdetails"], ["/", "!"]))
 async def strcall(client, message):
-    assistant = await group_assistant(SHUKLA, message.chat.id)
+    assistant = await group_assistant(ANNIE, message.chat.id)
     try:
-        await assistant.join_group_call(message.chat.id, AudioPiped("./SHUKLAMUSIC/assets/call.mp3"), stream_type=StreamType().pulse_stream)
+        await assistant.join_group_call(message.chat.id, AudioPiped("./ANNIEMUSIC/assets/call.mp3"), stream_type=StreamType().pulse_stream)
         text = "- Beloveds in the call 🫶 :\n\n"
         participants = await assistant.get_participants(message.chat.id)
         k = 0
@@ -90,7 +90,7 @@ async def get_group_call(
     await app.send_message(f"No group ᴠᴏɪᴄᴇ ᴄʜᴀᴛ Found** {err_msg}")
     return False
 
-@app.on_message(filters.command(["vcstart","startvc"], ["/", "!"]))
+@app.on_message(filters.command(["vcstart","startvc"], ["/", "!", "."]))
 async def start_group_call(c: Client, m: Message):
     chat_id = m.chat.id
     assistant = await get_assistant(chat_id)
@@ -150,7 +150,7 @@ async def start_group_call(c: Client, m: Message):
       except:
          await msg.edit_text("ɢɪᴠᴇ ᴛʜᴇ ʙᴏᴛ ᴀʟʟ ᴘᴇʀᴍɪꜱꜱɪᴏɴꜱ ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ ⚡")
 
-@app.on_message(filters.command(["vcend","endvc"], ["/", "!"]))
+@app.on_message(filters.command(["vcend","endvc"], ["/", "!", "."]))
 async def stop_group_call(c: Client, m: Message):
     chat_id = m.chat.id
     assistant = await get_assistant(chat_id)
