@@ -1,44 +1,44 @@
 from ANNIEMUSIC import app
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
-from os import environ
-from typing import Union, Optional
 from PIL import Image, ImageDraw, ImageFont
 import asyncio
+import os
 
 # --------------------------------------------------------------------------------- #
 
-get_font = lambda font_size, font_path: ImageFont.truetype(font_path, font_size)
-resize_text = (
-    lambda text_size, text: (text[:text_size] + "...").upper()
-    if len(text) > text_size
-    else text.upper()
-)
+def get_font(font_size, font_path):
+    return ImageFont.truetype(font_path, font_size)
+
+def resize_text(text_size, text):
+    return (text[:text_size] + "...").upper() if len(text) > text_size else text.upper()
 
 # --------------------------------------------------------------------------------- #
 
-async def get_userinfo_img(
-    bg_path: str,
-    font_path: str,
-    user_id: Union[int, str],
-    profile_path: Optional[str] = None
-):
-    bg = Image.open(bg_path)
+async def get_userinfo_img(bg_path, font_path, user_id, profile_path=None):
+    try:
+        bg = Image.open(bg_path)
+    except Exception as e:
+        print(f"Error loading background image: {e}")
+        return None
 
     if profile_path:
-        img = Image.open(profile_path)
-        mask = Image.new("L", img.size, 0)
-        draw = ImageDraw.Draw(mask)
-        draw.pieslice([(0, 0), img.size], 0, 360, fill=255)
+        try:
+            img = Image.open(profile_path)
+            mask = Image.new("L", img.size, 0)
+            draw = ImageDraw.Draw(mask)
+            draw.pieslice([(0, 0), img.size], 0, 360, fill=255)
 
-        circular_img = Image.new("RGBA", img.size, (0, 0, 0, 0))
-        circular_img.paste(img, (0, 0), mask)
-        resized = circular_img.resize((400, 400))
-        bg.paste(resized, (440, 160), resized)
+            circular_img = Image.new("RGBA", img.size, (0, 0, 0, 0))
+            circular_img.paste(img, (0, 0), mask)
+            resized = circular_img.resize((400, 400))
+            bg.paste(resized, (440, 160), resized)
+        except Exception as e:
+            print(f"Error processing profile image: {e}")
+            return None
 
     img_draw = ImageDraw.Draw(bg)
-
     img_draw.text(
         (529, 627),
         text=str(user_id).upper(),
@@ -55,35 +55,30 @@ async def get_userinfo_img(
 bg_path = "ANNIEMUSIC/assets/userinfo.png"
 font_path = "ANNIEMUSIC/assets/hiroko.ttf"
 
+# Check if paths exist
+assert os.path.exists(bg_path), "❌ Background image not found"
+assert os.path.exists(font_path), "❌ Font file not found"
+
 # --------------------------------------------------------------------------------- #
 
-# -------------
-
-@app.on_chat_member_updated(filters.group, group=20)
-async def member_has_left(client: app, member: ChatMemberUpdated):
-
+@app.on_chat_member_updated()
+async def member_has_left(client: Client, member: ChatMemberUpdated):
+    # Check if user left or was removed
     if (
-        not member.new_chat_member
-        and member.old_chat_member.status not in {
-            "banned", "left", "restricted"
-        }
-        and member.old_chat_member
+        member.old_chat_member
+        and member.new_chat_member
+        and member.old_chat_member.status in {"member", "administrator", "restricted"}
+        and member.new_chat_member.status in {"left", "kicked"}
     ):
-        pass
-    else:
-        return
+        user = member.old_chat_member.user or member.from_user
 
-    user = (
-        member.old_chat_member.user
-        if member.old_chat_member
-        else member.from_user
-    )
+        photo_id = getattr(user.photo, "big_file_id", None)
+        if not photo_id:
+            print(f"User {user.id} has no profile photo.")
+            return
 
-    # Check if the user has a profile photo
-    if user.photo and user.photo.big_file_id:
         try:
-            # Add the photo path, caption, and button details
-            photo = await app.download_media(user.photo.big_file_id)
+            photo = await client.download_media(photo_id)
 
             welcome_photo = await get_userinfo_img(
                 bg_path=bg_path,
@@ -91,15 +86,22 @@ async def member_has_left(client: app, member: ChatMemberUpdated):
                 user_id=user.id,
                 profile_path=photo,
             )
-        
-            caption = f"**❅─────✧❅✦❅✧─────❅**\n\n**๏ ᴀ ᴍᴇᴍʙᴇʀ ʟᴇғᴛ ᴛʜᴇ ɢʀᴏᴜᴘ🥀**\n\n**➻** {member.old_chat_member.user.mention}\n\n**๏ ᴏᴋ ʙʏᴇ ᴅᴇᴀʀ ᴀɴᴅ ʜᴏᴘᴇ ᴛᴏ sᴇᴇ ʏᴏᴜ ᴀɢᴀɪɴ ɪɴ ᴛʜɪs ᴄᴜᴛᴇ ɢʀᴏᴜᴘ ᴡɪᴛʜ ʏᴏᴜʀ ғʀɪᴇɴᴅs✨**\n\n**ㅤ•─╼⃝𖠁 ʙʏᴇ ♡︎ ʙᴀʙʏ 𖠁⃝╾─•**"
-            button_text = "๏ ᴠɪᴇᴡ ᴜsᴇʀ ๏"
 
-            # Generate a deep link to open the user's profile
+            if not welcome_photo:
+                return
+
+            caption = (
+                f"**❅─────✧❅✦❅✧─────❅**\n\n"
+                f"**๏ ᴀ ᴍᴇᴍʙᴇʀ ʟᴇғᴛ ᴛʜᴇ ɢʀᴏᴜᴘ🥀**\n\n"
+                f"**➻** {user.mention}\n\n"
+                f"**๏ ᴏᴋ ʙʏᴇ ᴅᴇᴀʀ ᴀɴᴅ ʜᴏᴘᴇ ᴛᴏ sᴇᴇ ʏᴏᴜ ᴀɢᴀɪɴ ɪɴ ᴛʜɪs ᴄᴜᴛᴇ ɢʀᴏᴜᴘ ᴡɪᴛʜ ʏᴏᴜʀ ғʀɪᴇɴᴅs✨**\n\n"
+                f"**ㅤ•─╼⃝𖠁 ʙʏᴇ ♡︎ ʙᴀʙʏ 𖠁⃝╾─•**"
+            )
+
+            button_text = "๏ ᴠɪᴇᴡ ᴜsᴇʀ ๏"
             deep_link = f"tg://openmessage?user_id={user.id}"
 
-            # Send the message with the photo, caption, and button
-            message = await client.send_photo(
+            msg = await client.send_photo(
                 chat_id=member.chat.id,
                 photo=welcome_photo,
                 caption=caption,
@@ -108,18 +110,17 @@ async def member_has_left(client: app, member: ChatMemberUpdated):
                 ])
             )
 
-            # Schedule a task to delete the message after 30 seconds
-            async def delete_message():
-                await asyncio.sleep(30)
-                await message.delete()
+            # Auto delete message after 30 seconds
+            asyncio.create_task(auto_delete(msg, delay=30))
 
-            # Run the task
-            asyncio.create_task(delete_message())
-            
         except RPCError as e:
-            print(e)
-            return
-    else:
-        # Handle the case where the user has no profile photo
-        print(f"User {user.id} has no profile photo.")
-        
+            print(f"RPCError: {e}")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+
+async def auto_delete(msg, delay=30):
+    await asyncio.sleep(delay)
+    try:
+        await msg.delete()
+    except Exception:
+        pass
