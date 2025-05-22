@@ -33,11 +33,13 @@ python-whois
 pyyaml
 qrcode
 requests
+random
 speedtest-cli
 SpeechRecognition
 spotipy
 telegraph
 tgcrypto
+typing
 unidecode
 wget
 youtube-search-python
