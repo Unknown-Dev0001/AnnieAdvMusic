@@ -34,7 +34,9 @@ python-whois
 pyyaml
 qrcode
 requests
-random
+random 
+socket
+struct
 speedtest-cli
 SpeechRecognition
 search-engine-parser
