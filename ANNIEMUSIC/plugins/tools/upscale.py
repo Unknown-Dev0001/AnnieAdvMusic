@@ -1,13 +1,11 @@
 import os
 import aiohttp
 import aiofiles
-import requests
 from urllib.parse import quote_plus
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from ANNIEMUSIC import app
-from config import BOT_USERNAME
 
 
 # === Helper: Download File from URL ===
@@ -23,8 +21,8 @@ async def download_from_url(path: str, url: str) -> str:
 
 
 # === /upscale ===
-@app.on_message(filters.command("upscale", prefixes="/"))
-async def upscale_image(client, message: Message):
+@app.on_message(filters.command("upscale"))
+async def upscale_image(client: Client, message: Message):
     replied = message.reply_to_message
     if not replied or not replied.photo:
         return await message.reply_text("❗ Please reply to an image.")
@@ -32,62 +30,29 @@ async def upscale_image(client, message: Message):
     status = await message.reply_text("🔄 Upscaling image...")
 
     try:
-        image = await replied.download()
-        response = requests.post(
-            "https://api.deepai.org/api/torch-srgan",
-            files={'image': open(image, 'rb')},
-            headers={'api-key': 'bf9ee957-9fad-46f5-a403-3e96ca9004e4'}
-        )
-        response.raise_for_status()
-        data = response.json()
-        output_url = data.get("output_url")
+        # Get file info
+        file_info = await client.get_file(replied.photo.file_id)
+        file_url = f"https://api.telegram.org/file/bot{client.token}/{file_info.file_path}"
 
-        if not output_url:
-            return await status.edit("❌ Upscale failed: No output received.")
+        # API URL
+        upscale_api = f"https://enhance.itz-ashlynn.workers.dev/?url={file_url}"
 
-        output_path = await download_from_url(image, output_url)
+        # Download the result
+        output_path = f"cache/upscaled_{message.id}.jpg"
+        result = await download_from_url(output_path, upscale_api)
+
+        if not result:
+            return await status.edit("❌ Upscaling failed.")
+
         await status.delete()
-        await message.reply_document(output_path)
+        await message.reply_document(result)
 
-    except requests.exceptions.RequestException as e:
-        await status.edit(f"❌ Request error: {str(e)}")
     except Exception as e:
-        await status.edit(f"⚠️ Unexpected error: {str(e)}")
+        await status.edit(f"⚠️ Error: `{str(e)}`")
 
 
-# === /waifu === NSFW
-waifu_api_url = 'https://api.waifu.im/search'
-
-
-def get_waifu_data(tags):
-    params = {
-        'included_tags': tags,
-        'height': '>=2000'
-    }
-    response = requests.get(waifu_api_url, params=params)
-    if response.status_code == 200:
-        return response.json()
-    return None
-
-
-@app.on_message(filters.command("animepic"))
-def waifu_command(client, message: Message):
-    try:
-        tags = ['maid']
-        waifu_data = get_waifu_data(tags)
-
-        if waifu_data and 'images' in waifu_data:
-            first_image = waifu_data['images'][0]
-            image_url = first_image['url']
-            message.reply_photo(image_url)
-        else:
-            message.reply_text("❌ No waifu found with the specified tags.")
-    except Exception as e:
-        message.reply_text(f"⚠️ Error: {str(e)}")
-
-
-# === /getdraw ===
-@app.on_message(filters.command("getdraw"))
+# === /gen ===
+@app.on_message(filters.command("gen"))
 async def draw_image(_, message: Message):
     reply = message.reply_to_message
     query = reply.text if reply and reply.text else message.text.split(None, 1)[1] if len(message.command) > 1 else None
