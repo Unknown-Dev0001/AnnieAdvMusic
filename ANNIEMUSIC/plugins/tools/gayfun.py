@@ -11,7 +11,7 @@ def calculate_gay_percentage():
     # Simple random gay percentage calculation for fun
     return random.randint(1, 100)
 
-
+# ==== /gayp ==== #
 def generate_gay_response(gay_percentage):
     # Define random texts and emojis for different gay percentage ranges
     if gay_percentage < 30:
@@ -21,7 +21,7 @@ def generate_gay_response(gay_percentage):
     else:
         return "You're shining with rainbow colors! 🌟🏳️‍🌈"
 
-@app.on_message(filters.command("gay") & filters.regex(r'^/gay$'))
+@app.on_message(filters.command("gayp") & filters.regex(r'^/gay$'))
 def gay_calculator_command(client, message: Message):
     # Calculate gay percentage
     gay_percentage = calculate_gay_percentage()
