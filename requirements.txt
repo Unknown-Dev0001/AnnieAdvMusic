@@ -35,6 +35,7 @@ qrcode
 requests
 search-engine-parser
 spotipy
+speedtest-cli
 telegraph
 tgcrypto
 unidecode
