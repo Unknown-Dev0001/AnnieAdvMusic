@@ -36,6 +36,7 @@ requests
 random
 speedtest-cli
 SpeechRecognition
+search-engine-parser
 spotipy
 telegraph
 tgcrypto
