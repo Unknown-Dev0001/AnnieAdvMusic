@@ -14,6 +14,7 @@ gpytranslate
 gtts
 heroku3
 httpx[http2]==0.27.2
+img2pdf
 kurigram~=2.2.1
 lexica-api
 motor
