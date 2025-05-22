@@ -44,6 +44,7 @@ spotipy
 telegraph
 tgcrypto
 typing
+uuid
 unidecode
 wget
 youtube-search-python
