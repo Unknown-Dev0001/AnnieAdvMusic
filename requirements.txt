@@ -1,7 +1,6 @@
 aiofiles
 aiohttp
 apscheduler
-asyncio
 bing_image_downloader
 bs4
 deepai
@@ -23,7 +22,6 @@ numpy
 opencv-python
 pillow==11.2.1
 psutil
-pathlib
 pycryptodome
 pydub
 pyfiglet
@@ -34,21 +32,12 @@ python-whois
 pyyaml
 qrcode
 requests
-random 
-socket
-struct
-speedtest-cli
-SpeechRecognition
 search-engine-parser
 spotipy
 telegraph
 tgcrypto
-typing
-time
-uuid
 unidecode
 wget
 youtube-search-python
 yt-dlp==2025.4.30
 py-tgcalls
-zipfile
