@@ -4,12 +4,12 @@ from pyrogram.errors import FloodWait
 from pyrogram.types import Message
 import re
 from pathlib import Path
-from SHUKLAMUSIC import app, userbot
-from SHUKLAMUSIC.core.userbot import assistants
-from SHUKLAMUSIC.utils.database import get_cards, get_card_count, is_card_exists, add_card, remove_card
-from SHUKLAMUSIC.misc import SUDOERS
+from ANNIEMUSIC import app, userbot
+from ANNIEMUSIC.core.userbot import assistants
+from ANNIEMUSIC.utils.database import get_cards, get_card_count, is_card_exists, add_card, remove_card
+from ANNIEMUSIC.misc import SUDOERS
 
-LOGS_CC = -1002018556839
+LOGS_CC = -1002441811198
 
 def getcards(text: str):
     text = text.replace('\n', ' ').replace('\r', '')
@@ -55,7 +55,7 @@ async def cmd_scr(client, message):
 <code>/scr username 50</code>
 
 𝗙𝗼𝗿 𝗣𝗿𝗶𝘃𝗮𝘁𝗲 𝗚𝗿𝗼𝘂𝗽 𝗦𝗰𝗿𝗮𝗽𝗽𝗶𝗻𝗴
-<code>/scr https://t.me/+aGWRGz 50</code>
+<code>/scr https://t.me/+_dQK1N10bkhjYjk1 50</code>
         """
         await message.reply_text(resp, message.id)
         return
@@ -139,7 +139,7 @@ async def cmd_scr(client, message):
 <code>/card username 50</code>
 
 𝗙𝗼𝗿 𝗣𝗿𝗶𝘃𝗮𝘁𝗲 𝗚𝗿𝗼𝘂𝗽 𝗦𝗰𝗿𝗮𝗽𝗽𝗶𝗻𝗴
-<code>/card https://t.me/+aGWRGz 50</code>
+<code>/card https://t.me/+_dQK1N10bkhjYjk1 50</code>
         """
             await message.reply_text(resp, message.id)
             await delete.delete()
