@@ -15,7 +15,8 @@ from pyrogram import filters
 from ANNIEMUSIC.core.call import JARVIS
 AnnieXAssis1 = JARVIS.one
 from pyrogram.types import VideoChatEnded, Message
-from pytgcalls import PyTgCalls, StreamType
+from pytgcalls import PyTgCalls
+from pytgcalls.types import StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from pytgcalls.exceptions import (NoActiveGroupCall, TelegramServerError, AlreadyJoinedError)
 
