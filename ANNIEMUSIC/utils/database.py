@@ -1,5 +1,5 @@
 import random
-from ANNIEMUSIC.misc.db import cardsdb
+from ANNIEMUSIC.core.mongo import cardsdb
 from typing import Dict, List, Union
 
 from ANNIEMUSIC import userbot
