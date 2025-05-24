@@ -1,5 +1,5 @@
 import random
-from ANNIEMUSIC import cardsdb
+from ANNIEMUSIC.misc.db import cardsdb
 from typing import Dict, List, Union
 
 from ANNIEMUSIC import userbot
