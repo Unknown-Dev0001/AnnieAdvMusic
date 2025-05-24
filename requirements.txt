@@ -42,4 +42,4 @@ unidecode
 wget
 youtube-search-python
 yt-dlp==2025.5.22
-py-tgcalls
+py-tgcalls==2.1.1
