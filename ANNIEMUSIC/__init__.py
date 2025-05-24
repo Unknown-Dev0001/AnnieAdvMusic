@@ -2,20 +2,16 @@ from ANNIEMUSIC.core.bot import JARVIS
 from ANNIEMUSIC.core.dir import dirr
 from ANNIEMUSIC.core.git import git
 from ANNIEMUSIC.core.userbot import Userbot
-from ANNIEMUSIC.misc import dbb, heroku
-
-from .logging import LOGGER
+from ANNIEMUSIC.logging import LOGGER
 from config import SUDOERS
-
-dirr()
-git()
-dbb()
-heroku()
 
 app = JARVIS()
 userbot = Userbot()
 
-from .platforms import *
+from ANNIEMUSIC.platforms import (
+    AppleAPI, CarbonAPI, SoundAPI, SpotifyAPI,
+    RessoAPI, TeleAPI, YouTubeAPI
+)
 
 Apple = AppleAPI()
 Carbon = CarbonAPI()
@@ -24,3 +20,10 @@ Spotify = SpotifyAPI()
 Resso = RessoAPI()
 Telegram = TeleAPI()
 YouTube = YouTubeAPI()
+
+def initialize_all():
+    dirr()
+    git()
+    from ANNIEMUSIC.misc import heroku, dbb
+    dbb()
+    heroku()
