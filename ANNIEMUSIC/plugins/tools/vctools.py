@@ -12,7 +12,8 @@ from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, ChatAdmi
 from ANNIEMUSIC import app, Userbot
 from typing import List, Union
 from pyrogram import filters
-from ANNIEMUSIC.core.call import AnnieXAssis1
+from ANNIEMUSIC.core.call import call
+AnnieXAssis1 = call.one
 from pyrogram.types import VideoChatEnded, Message
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
@@ -20,7 +21,7 @@ from pytgcalls.exceptions import (NoActiveGroupCall, TelegramServerError, Alread
 
 @app.on_message(filters.command(["vcdetails"], ["/", "!"]))
 async def strcall(client, message):
-    assistant = await group_assistant(AnnieXAssis1, message.chat.id)
+    assistant = await group_assistant(call.one, message.chat.id)
     try:
         await assistant.join_group_call(message.chat.id, AudioPiped("./ANNIEMUSIC/assets/call.mp3"), stream_type=StreamType().pulse_stream)
         text = "- Beloveds in the call 🫶 :\n\n"
