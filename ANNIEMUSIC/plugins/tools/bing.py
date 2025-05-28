@@ -1,35 +1,44 @@
-from ANNIEMUSIC import app 
+from ANNIEMUSIC import app
 import requests as r
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup 
-from pyrogram import filters 
+from pyrogram import filters
+from pyrogram.types import Message
+import asyncio
 
-API_URL = "https://sugoi-api.vercel.app/search"
+# AI Assistant API URL
+API_URL = "https://api-aiassistant.eternalowner06.workers.dev/"
 
 @app.on_message(filters.command(["bingsearch", "bing", "search"]))
-async def bing_search(michiko, message):
+async def ai_text_response(client, message: Message):
     try:
         if len(message.command) == 1:
-            await message.reply_text("Please provide a keyword to search.")
+            await message.reply_text("❗ Please provide a prompt.\n\nExample:\n`/bingsearch What is NDA exam?`")
             return
 
-        keyword = " ".join(
-            message.command[1:]
-        )  # Assuming the keyword is passed as arguments
-        params = {"keyword": keyword}
-        response = r.get(API_URL, params=params)
+        prompt = " ".join(message.command[1:])
+
+        # Step 1: Loading...
+        loading_msg = await message.reply_text("🔄 Loading...")
+
+        # Step 2: Please Wait...
+        await asyncio.sleep(1.2)
+        await loading_msg.edit_text("⏳ Please wait...")
+
+        # Step 3: Almost Done...
+        await asyncio.sleep(1.2)
+        await loading_msg.edit_text("✅ Almost done...")
+
+        # Fetch AI response
+        response = r.get(f"{API_URL}?prompt={prompt}")
 
         if response.status_code == 200:
-            results = response.json()
-            if not results:
-                await message.reply_text("No results found.")
-            else:
-                message_text = ""
-                for result in results[:7]:
-                    title = result.get("\x74\x69\x74\x6C\x65", "")
-                    link = result.get("\x6C\x69\x6E\x6B", "")
-                    message_text += f"{title}\n{link}\n\n"
-                await message.reply_text(message_text.strip())
+            data = response.json()
+            try:
+                text = data["candidates"][0]["content"]["parts"][0]["text"]
+                await loading_msg.edit_text(text.strip())
+            except (KeyError, IndexError):
+                await loading_msg.edit_text("⚠️ Unexpected response format from AI.")
         else:
-            await message.reply_text("Sorry, something went wrong with the search.")
+            await loading_msg.edit_text("❌ Failed to get response from AI. Try again later.")
+
     except Exception as e:
-        await message.reply_text(f"An error occurred: {str(e)}")
+        await loading_msg.edit_text(f"⚠️ An error occurred:\n`{str(e)}`")
