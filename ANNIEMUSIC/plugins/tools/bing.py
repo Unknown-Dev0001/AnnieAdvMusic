@@ -11,7 +11,7 @@ API_URL = "https://api-aiassistant.eternalowner06.workers.dev/"
 async def ai_text_response(client, message: Message):
     try:
         if len(message.command) == 1:
-            await message.reply_text("❗ Please provide a prompt.\n\nExample:\n`/bingsearch What is NDA exam?`")
+            await message.reply_text("❗ Please provide a prompt.")
             return
 
         prompt = " ".join(message.command[1:])
