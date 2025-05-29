@@ -49,4 +49,4 @@ class JARVIS(Client):
                 "Please promote your bot as an admin in your log group/channel."
             )
             sys.exit()
-        LOGGER(__name__).info(f"Music Bot Started as {self.name}")
+        LOGGER(__name__).info(f"Mᴜsɪᴄ Bᴏᴛ Sᴛᴀʀᴛᴇᴅ ᴀs {self.name} 💀")
