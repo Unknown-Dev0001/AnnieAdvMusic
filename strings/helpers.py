@@ -151,7 +151,7 @@ HELP_11 = """
 
 <b><u>Cʜᴀᴛ-ᴡɪᴛʜ-AI ғᴇᴀᴛᴜʀᴇs.</u></b>
 
-• Lrya - ʏᴏᴜ ᴄᴀɴ ᴀᴄᴄᴇꜱꜱ ᴊᴀʀᴠɪꜱ ʙʏ ᴛʜɪꜱ.
+• Lyra - ʏᴏᴜ ᴄᴀɴ ᴀᴄᴄᴇꜱꜱ ᴊᴀʀᴠɪꜱ ʙʏ ᴛʜɪꜱ.
 • Assis - ᴛʜᴇ ᴀɪ ᴡɪʟʟ ʀᴇꜱᴘᴏɴᴅ ɪɴ ᴀᴜᴅɪᴏ ꜰᴏʀᴍᴀᴛ.
 • /gpt - ᴀᴄᴄᴇꜱꜱ ɢᴘᴛ ꜰᴜɴᴄᴛɪᴏɴᴀʟɪᴛʏ.
 • /bard - ɪɴᴠᴏᴋᴇ ᴛʜᴇ ʙᴀʀᴅ ꜰᴇᴀᴛᴜʀᴇ.
@@ -182,7 +182,7 @@ HELP_13 = """
 <b><u>ɪᴍᴀɢᴇ :</u></b>
 AI drawing & editing.
 
-• /getdraw ➠ ɢᴇɴᴇʀᴀᴛᴇꜱ ᴀ ᴅʀᴀᴡɪɴɢ ʙᴀꜱᴇᴅ ᴏɴ ᴀ ɢɪᴠᴇɴ ᴘʀᴏᴍᴘᴛ.
+• /gen ➠ ɢᴇɴᴇʀᴀᴛᴇꜱ ᴀ ᴅʀᴀᴡɪɴɢ ʙᴀꜱᴇᴅ ᴏɴ ᴀ ɢɪᴠᴇɴ ᴘʀᴏᴍᴘᴛ.
 • /upscale ➠ ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ ᴛᴏ ᴜᴘꜱᴄᴀʟᴇ ɪᴛ ᴀɴᴅ ɪᴍᴘʀᴏᴠᴇ ɪᴛꜱ ǫᴜᴀʟɪᴛʏ.
 • /rmbg ➠ ʀᴇᴍᴏᴠᴇꜱ ᴛʜᴇ ʙᴀᴄᴋɢʀᴏᴜɴᴅ ꜰʀᴏᴍ ᴀɴ ɪᴍᴀɢᴇ.
 
@@ -196,7 +196,7 @@ Keep the bot healthy.
 • /logs – Get latest logs.  
 • /logger enable – Start live message logging.  
 • /maintenance enable – Bot replies “Under maintenance”.  
-• /update – Git pull & PM you the diff.  
+• /update – Git pull & PM you the diff.  [If this bot is hosted on VPS]
 • /restart – Graceful reboot.
 """
 
