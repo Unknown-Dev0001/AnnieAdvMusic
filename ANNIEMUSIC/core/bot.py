@@ -18,7 +18,7 @@ class JARVIS(Client):
             max_concurrent_transmissions=7,
             workers=50,
         )
-        LOGGER(__name__).info("Bot client initialized.")
+        LOGGER(__name__).info("Bᴏᴛ ᴄʟɪᴇɴᴛ ɪɴɪᴛɪᴀʟɪᴢᴇᴅ. 🙈")
         
     async def start(self):
         await super().start()
