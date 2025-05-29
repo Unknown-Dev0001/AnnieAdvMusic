@@ -13,8 +13,8 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 OWNER_ID = int(getenv("OWNER_ID", 7500269454))
 OWNER_USERNAME = getenv("OWNER_USERNAME", "Unknown_RK01")
 BOT_USERNAME = getenv("BOT_USERNAME", "LyraTuneBot")
-BOT_NAME = getenv("BOT_NAME", "˹𝐋𝐫𝐲𝐚 ✘ 𝙼ᴜsɪᴄ˼ ♪")
-ASSUSERNAME = getenv("ASSUSERNAME", "LryaxAssistant")
+BOT_NAME = getenv("BOT_NAME", "˹𝐋𝐲𝐫𝐚 ✘ 𝙼ᴜsɪᴄ˼ ♪")
+ASSUSERNAME = getenv("ASSUSERNAME", "LyraTuneAssistant")
 EVALOP = list(map(int, getenv("EVALOP", "8055384069").split()))
 
 # ───── Mongo & Logging ───── #
