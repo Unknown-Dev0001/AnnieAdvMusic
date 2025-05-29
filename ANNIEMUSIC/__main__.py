@@ -28,7 +28,7 @@ async def init():
 
     try:
         await fetch_and_store_cookies()
-        LOGGER("ANNIEMUSIC").info("YouTube cookies loaded successfully.")
+        LOGGER("ANNIEMUSIC").info("YᴏᴜTᴜʙᴇ ᴄᴏᴏᴋɪᴇs ʟᴏᴀᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ.")
     except Exception as e:
         LOGGER("ANNIEMUSIC").warning(f"Cookie error: {e}")
 
@@ -48,7 +48,7 @@ async def init():
     for all_module in ALL_MODULES:
         importlib.import_module("ANNIEMUSIC.plugins" + all_module)
 
-    LOGGER("ANNIEMUSIC.plugins").info("Modules loaded successfully.")
+    LOGGER("ANNIEMUSIC.plugins").info("Mᴏᴅᴜʟᴇs ʟᴏᴀᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ.")
 
     await userbot.start()
     await JARVIS.start()
@@ -57,7 +57,7 @@ async def init():
         await JARVIS.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
     except NoActiveGroupCall:
         LOGGER("ANNIEMUSIC").error(
-            "Voice chat not enabled in the log group/channel. Stopping bot..."
+            "Vᴏɪᴄᴇ ᴄʜᴀᴛ ɴᴏᴛ ᴇɴᴀʙʟᴇᴅ ɪɴ ᴛʜᴇ ʟᴏɢ ɢʀᴏᴜᴘ. Sᴛᴏᴘᴘɪɴɢ Bᴏᴛ..."
         )
         exit()
     except:
@@ -69,12 +69,12 @@ async def init():
         asyncio.create_task(start_webserver())
         asyncio.create_task(ping_server(config.PING_URL, config.PING_TIME))
 
-    LOGGER("ANNIEMUSIC").info("Music Robot Started Successfully.")
+    LOGGER("ANNIEMUSIC").info("Mᴜsɪᴄ Rᴏʙᴏᴛ Sᴛᴀʀᴛᴇᴅ Sᴜᴄᴄᴇssғᴜʟʟʏ. Dᴇᴠᴇʟᴏᴘᴇᴅ ʙʏ Sʜɪᴠᴀᴍ Yᴀᴅᴀᴠ 😎")
     await idle()
 
     await app.stop()
     await userbot.stop()
-    LOGGER("ANNIEMUSIC").info("Stopping music bot...")
+    LOGGER("ANNIEMUSIC").info("Sᴛᴏᴘᴘɪɴɢ Mᴜsɪᴄ Bᴏᴛ...")
 
 
 if __name__ == "__main__":
