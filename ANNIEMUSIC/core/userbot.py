@@ -64,7 +64,7 @@ class Userbot:
 
             try:
                 await client.send_message(
-                    config.LOGGER_ID, f"Lrya's Assistant Started! [{index}]"
+                    config.LOGGER_ID, f"𝐿𝑦𝑟𝑎’𝑠 𝐴𝑠𝑠𝑖𝑠𝑡𝑎𝑛𝑡 𝑆𝑡𝑎𝑟𝑡𝑒𝑑! [{index}]"
                 )
             except Exception:
                 LOGGER(__name__).error(
@@ -76,13 +76,13 @@ class Userbot:
             client.id, client.name, client.username = me.id, me.first_name, me.username
             assistantids.append(me.id)
 
-            LOGGER(__name__).info(f"Assistant {index} Started as {client.name}")
+            LOGGER(__name__).info(f"Assɪsᴛᴀɴᴛ {index} Sᴛᴀʀᴛᴇᴅ ᴀs {client.name}")
 
         except Exception as e:
-            LOGGER(__name__).error(f"Failed to start Assistant {index}: {e}")
+            LOGGER(__name__).error(f"Failed to Start Assistant {index}: {e}")
 
     async def start(self):
-        LOGGER(__name__).info("Starting Lrya's Assistants...")
+        LOGGER(__name__).info("Sᴛᴀʀᴛɪɴɢ Lʏʀᴀ's Assɪsᴛᴀɴᴛ...")
         await self.start_assistant(self.one, 1)
         await self.start_assistant(self.two, 2)
         await self.start_assistant(self.three, 3)
@@ -90,7 +90,7 @@ class Userbot:
         await self.start_assistant(self.five, 5)
 
     async def stop(self):
-        LOGGER(__name__).info("Stopping Assistants...")
+        LOGGER(__name__).info("Sᴛᴏᴘᴘɪɴɢ Assɪsᴛᴀɴᴛ...")
         try:
             if config.STRING1:
                 await self.one.stop()
