@@ -41,6 +41,6 @@ tgcrypto==1.2.5
 unidecode
 wget
 youtube-search-python
-yt-dlp==2025.5.22
 pyrogram==2.0.106
 git+https://github.com/pytgcalls/pytgcalls@master
+git+https://github.com/yt-dlp/yt-dlp@master
