@@ -32,8 +32,6 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 API_URL = getenv("API_URL") # optional
 API_KEY = getenv("API_KEY") # optional
 COOKIE_URL = getenv("COOKIE_URL") # necessary
-PIXELCUT_API_KEY = "sk_d4eec359f0f545d68f470db5dab61c74"
-AUTHORIZED_USERS = [7898178629, 7513083783, 7500269454]
 
 # ───── Heroku Configuration ───── #
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
@@ -49,7 +47,7 @@ SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BotVerseRavi")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/BotVerseRaviSupport")
 
 # ───── Assistant Auto Leave ───── #
-AUTO_LEAVING_ASSISTANT = True
+AUTO_LEAVING_ASSISTANT = False
 AUTO_LEAVE_ASSISTANT_TIME = int(getenv("ASSISTANT_LEAVE_TIME", "11500"))
 
 # ───── Error Handling ───── #
