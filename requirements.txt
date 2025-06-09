@@ -12,6 +12,7 @@ gitpython
 google-api-python-client
 gpytranslate
 gtts
+googlesearch-python
 heroku3
 httpx[http2]<0.24
 img2pdf
