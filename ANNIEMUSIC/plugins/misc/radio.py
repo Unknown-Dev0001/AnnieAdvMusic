@@ -26,8 +26,8 @@ RADIO_STATION = {
     "ᴇɴɢʟɪsʜ": "https://hls-01-regions.emgsound.ru/11_msk/playlist.m3u8",
     "ᴍɪʀᴄʜɪ": "http://peridot.streamguys.com:7150/Mirchi",
     "ʀᴀᴅɪᴏ ᴛᴏᴅᴀʏ": "http://stream.zenolive.com/8wv4d8g4344tv",
-    "ʏᴏᴜᴛᴜʙᴇ": "https://www.youtube.com/live/eu191hR_LEc?si=T-9QYD548jd0Mogp",
-    "ᴢᴇᴇ ɴᴇᴡs": "https://www.youtube.com/live/TPcmrPrygDc?si=hiHBkIidgurQAd1P",
+    "ʏᴏᴜᴛᴜʙᴇ": "https://www.youtube.com/live/36YnV9STBqc?si=lqsPj1cg0rmikUdj",
+    "ɴᴇᴡs": "https://www.youtube.com/live/9sV1TlXzk2k?si=T_jukCmCyBOFQIpa",
     "Chill out": "https://www.youtube.com/live/36YnV9STBqc",
 }
 
