@@ -7,7 +7,7 @@ import asyncio
 # AI Assistant API URL
 API_URL = "https://api-aiassistant.eternalowner06.workers.dev/"
 
-@app.on_message(filters.command(["bingsearch", "bing", "search"]))
+@app.on_message(filters.command(["bingsearch", "bing"]))
 async def ai_text_response(client, message: Message):
     try:
         if len(message.command) == 1:
