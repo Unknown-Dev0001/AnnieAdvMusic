@@ -1,4 +1,5 @@
 import datetime as dt
+from functools import wraps
 from typing import Tuple, Optional
 
 from pyrogram import Client
