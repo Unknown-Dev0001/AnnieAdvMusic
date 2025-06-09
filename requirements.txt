@@ -37,6 +37,7 @@ requests
 search-engine-parser
 spotipy
 speedtest-cli
+safoneapi
 telegraph
 tgcrypto==1.2.5
 unidecode
