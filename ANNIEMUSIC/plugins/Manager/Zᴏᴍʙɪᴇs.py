@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.errors import FloodWait
 from ANNIEMUSIC import app
-from utils.permissions import adminsOnly
+from ANNIEMUSIC.utils.permissions import adminsOnly
 
 chatQueue = []
 
