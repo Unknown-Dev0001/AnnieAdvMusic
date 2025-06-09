@@ -40,7 +40,8 @@ telegraph
 tgcrypto==1.2.5
 unidecode
 wget
-youtube-search-python
-pyrogram==2.0.106
-git+https://github.com/pytgcalls/pytgcalls@master
-git+https://github.com/yt-dlp/yt-dlp@master
+git+https://github.com/TheChampu/pyrogram@master
+git+https://github.com/yt-dlp/yt-dlp
+git+https://github.com/alexmercerind/youtube-search-python@main
+git+https://github.com/joetats/youtube_search@master
+git+https://github.com/TheChampu/yt-dlp-youtube-oauth2
