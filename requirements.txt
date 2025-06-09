@@ -40,6 +40,7 @@ telegraph
 tgcrypto==1.2.5
 unidecode
 wget
+git+https://github.com/pytgcalls/pytgcalls
 git+https://github.com/TheChampu/pyrogram@master
 git+https://github.com/yt-dlp/yt-dlp
 git+https://github.com/alexmercerind/youtube-search-python@main
