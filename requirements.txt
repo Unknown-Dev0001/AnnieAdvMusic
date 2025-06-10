@@ -38,6 +38,7 @@ qrcode
 requests
 search-engine-parser
 spotipy
+safoneapi
 speedtest-cli 
 SpeechRecognition
 telegraph
