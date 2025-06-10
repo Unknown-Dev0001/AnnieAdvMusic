@@ -69,7 +69,7 @@ async def init():
         asyncio.create_task(start_webserver())
         asyncio.create_task(ping_server(config.PING_URL, config.PING_TIME))
 
-    LOGGER("ANNIEMUSIC").info("Mᴜsɪᴄ Rᴏʙᴏᴛ Sᴛᴀʀᴛᴇᴅ Sᴜᴄᴄᴇssғᴜʟʟʏ. Dᴇᴠᴇʟᴏᴘᴇᴅ ʙʏ Sʜɪᴠᴀᴍ Yᴀᴅᴀᴠ 😎")
+    LOGGER("ANNIEMUSIC").info("Mᴜsɪᴄ ʙᴏᴛ Sᴛᴀʀᴛᴇᴅ Sᴜᴄᴄᴇssғᴜʟʟʏ. Dᴇᴠᴇʟᴏᴘᴇᴅ ʙʏ Sʜɪᴠᴀᴍ Yᴀᴅᴀᴠ 😎")
     await idle()
 
     await app.stop()
