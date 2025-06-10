@@ -142,3 +142,19 @@ def slider_markup(_, videoid, user_id, query, query_type, channel, fplay):
             ),
         ],
     ]
+
+# ==== New Func ==== #
+def telegram_markup(_, chat_id):
+    return [
+        [
+            InlineKeyboardButton(
+                text=_["PL_B_3"],
+                callback_data=f"PanelMarkup None|{chat_id}",
+            ),
+            InlineKeyboardButton(text=_["CLOSEMENU_BUTTON"], callback_data="close"),
+        ],
+    ]
+
+close_keyboard = InlineKeyboardMarkup(
+    [[InlineKeyboardButton(text="𝖢𝗅𝗈𝗌𝖾", callback_data="close")]]
+)
