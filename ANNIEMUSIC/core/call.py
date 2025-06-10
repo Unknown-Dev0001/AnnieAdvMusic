@@ -641,5 +641,4 @@ class Call(PyTgCalls):
                     return
                 autoend[chat_id] = {}
 
-
-Alexa = Call()
+JARVIS = Call()
