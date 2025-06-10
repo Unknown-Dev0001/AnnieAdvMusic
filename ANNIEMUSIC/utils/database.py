@@ -696,3 +696,129 @@ async def remove_card(cc: str):
     if not is_exist:
         return
     return await cardsdb.delete_one({"cc": cc})
+
+# ==== New Functions ==== 
+async def add_active_chat(chat_id: int):
+    if chat_id not in active:
+        active.append(chat_id)
+
+async def add_active_video_chat(chat_id: int):
+    if chat_id not in activevideo:
+        activevideo.append(chat_id)
+
+async def get_audio_bitrate(chat_id: int) -> str:
+    mode = audio.get(chat_id)
+    if not mode:
+        return AudioQuality.HIGH
+    if str(mode) == "High":
+        return AudioQuality.STUDIO
+    elif str(mode) == "Medium":
+        return AudioQuality.HIGH
+    elif str(mode) == "Low":
+        return AudioQuality.LOW()
+
+async def get_lang(chat_id: int) -> str:
+    mode = langm.get(chat_id)
+    if not mode:
+        lang = await langdb.find_one({"chat_id": chat_id})
+        if not lang:
+            langm[chat_id] = "en"
+            return "en"
+        langm[chat_id] = lang["lang"]
+        return lang["lang"]
+    return mode
+
+async def get_loop(chat_id: int) -> int:
+    lop = loop.get(chat_id)
+    return lop or 0
+
+async def get_video_bitrate(chat_id: int) -> str:
+    mode = video.get(chat_id)
+    if not mode:
+        if PRIVATE_BOT_MODE == str(True):
+            return VideoQuality.FHD_1080p
+        else:
+            return VideoQuality.HD_720p
+    if str(mode) == "High":
+        return VideoQuality.QHD_2K
+    elif str(mode) == "Medium":
+        return VideoQuality.FHD_1080p
+    elif str(mode) == "Low":
+        return VideoQuality.HD_720p
+
+async def is_autoend() -> bool:
+    chat_id = 123
+    mode = autoend.get(chat_id)
+    if not mode:
+        user = await autoenddb.find_one({"chat_id": chat_id})
+        if not user:
+            autoend[chat_id] = False
+            return False
+        autoend[chat_id] = True
+        return True
+    return mode
+
+async def music_on(chat_id: int):
+    pause[chat_id] = True
+
+async def remove_active_chat(chat_id: int):
+    if chat_id in active:
+        active.remove(chat_id)
+async def remove_active_video_chat(chat_id: int):
+    if chat_id in activevideo:
+        activevideo.remove(chat_id)
+
+async def set_loop(chat_id: int, mode: int):
+    loop[chat_id] = mode
+
+async def get_assistant(chat_id: int) -> str:
+    from ANNIEMUSIC.core.userbot import assistants
+
+    assistant = assistantdict.get(chat_id)
+    if not assistant:
+        dbassistant = await db.find_one({"chat_id": chat_id})
+        if not dbassistant:
+            userbot = await set_assistant(chat_id)
+        else:
+            got_assis = dbassistant["assistant"]
+            if got_assis in assistants:
+                assistantdict[chat_id] = got_assis
+                userbot = await get_client(got_assis)
+            else:
+                userbot = await set_assistant(chat_id)
+    else:
+        if assistant in assistants:
+            userbot = await get_client(assistant)
+        else:
+            userbot = await set_assistant(chat_id)
+
+    return userbot
+
+async def group_assistant(self, chat_id: int) -> int:
+    from ANNIEMUSIC.core.userbot import assistants
+
+    if assistant := assistantdict.get(chat_id):
+        assis = (
+            assistant if assistant in assistants else await set_calls_assistant(chat_id)
+        )
+    else:
+        dbassistant = await db.find_one({"chat_id": chat_id})
+        if not dbassistant:
+            assis = await set_calls_assistant(chat_id)
+        else:
+            assis = dbassistant["assistant"]
+            if assis in assistants:
+                assistantdict[chat_id] = assis
+                assis = assis
+            else:
+                assis = await set_calls_assistant(chat_id)
+    if int(assis) == 1:
+        return self.one
+    elif int(assis) == 2:
+        return self.two
+    elif int(assis) == 3:
+        return self.three
+    elif int(assis) == 4:
+        return self.four
+    elif int(assis) == 5:
+        return self.five
