@@ -14,7 +14,7 @@ gpytranslate
 gtts
 googlesearch-python
 heroku3
-httpx[http2]<0.24
+httpx<0.25
 img2pdf
 kurigram~=2.2.1
 lexica-api
