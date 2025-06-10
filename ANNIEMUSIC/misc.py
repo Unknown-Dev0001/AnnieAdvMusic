@@ -7,15 +7,13 @@ from pyrogram.enums import ChatMemberStatus
 
 from config import HEROKU_API_KEY, HEROKU_APP_NAME, OWNER_ID
 from ANNIEMUSIC.core.mongo import mongodb
+from ANNIEMUSIC.utils.mongo import db  # ✅ Correct import of db
 from .logging import LOGGER
 
 SUDOERS = filters.user()
 COMMANDERS = [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]
 HAPP = None
 _boot_ = time.time()
-
-# Initialize db as an empty dict at module level for safe import
-db = {}
 
 def is_heroku():
     return "heroku" in socket.getfqdn()
