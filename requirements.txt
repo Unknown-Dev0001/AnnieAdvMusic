@@ -1,5 +1,5 @@
 aiofiles
-aiohttp
+aiohttp<3.13
 apscheduler
 bing_image_downloader
 bs4
@@ -15,6 +15,7 @@ gtts
 googlesearch-python
 heroku3
 httpx<0.25
+httpcore<0.18
 img2pdf
 kurigram~=2.2.1
 lexica-api
@@ -42,8 +43,10 @@ telegraph
 tgcrypto==1.2.5
 unidecode
 wget
-git+https://github.com/pytgcalls/pytgcalls
-git+https://github.com/TheChampu/pyrogram@master
+# Safe pinned versions for Pyrogram & PyTgCalls
+pyrogram==2.0.106
+py-tgcalls==2.2.1
+# For yt-dlp, youtube-search-python, youtube_search → better to use stable PyPI or pinned commit
 git+https://github.com/yt-dlp/yt-dlp
 git+https://github.com/alexmercerind/youtube-search-python@main
 git+https://github.com/joetats/youtube_search@master
