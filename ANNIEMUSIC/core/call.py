@@ -427,7 +427,7 @@ class Call:
 
 
     async def start(self) -> None:
-        LOGGER(__name__).info("Sᴛᴀʀᴛɪɴɢ PʏTɢCᴀʟʟs Cʟɪᴇɴᴛs...🤫")
+        LOGGER(__name__).info("Starting PyTgCalls Clients...")
         if config.STRING1:
             await self.one.start()
         if config.STRING2:
