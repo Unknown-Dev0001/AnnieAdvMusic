@@ -1,3 +1,6 @@
+# stable deps
+httpx<0.25
+youtube-search-python==1.6.6
 aiofiles
 aiohttp
 apscheduler
@@ -14,8 +17,6 @@ gpytranslate
 gtts
 googlesearch-python
 heroku3
-httpx==0.23.3
-httpcore==0.16.3
 img2pdf
 kurigram~=2.2.1
 lexica-api
@@ -46,6 +47,4 @@ wget
 git+https://github.com/pytgcalls/pytgcalls
 git+https://github.com/TheChampu/pyrogram@master
 git+https://github.com/yt-dlp/yt-dlp
-git+https://github.com/alexmercerind/youtube-search-python@v1.6.5
-git+https://github.com/joetats/youtube_search@master
 git+https://github.com/TheChampu/yt-dlp-youtube-oauth2
