@@ -772,28 +772,27 @@ async def remove_active_video_chat(chat_id: int):
 async def set_loop(chat_id: int, mode: int):
     loop[chat_id] = mode
 
-async def get_assistant(chat_id: int) -> str:
-    from ANNIEMUSIC.core.userbot import assistants
+# async def get_assistant(chat_id: int) -> str:
+#    from ANNIEMUSIC.core.userbot import assistants
 
-    assistant = assistantdict.get(chat_id)
-    if not assistant:
-        dbassistant = await db.find_one({"chat_id": chat_id})
-        if not dbassistant:
-            userbot = await set_assistant(chat_id)
-        else:
-            got_assis = dbassistant["assistant"]
-            if got_assis in assistants:
-                assistantdict[chat_id] = got_assis
-                userbot = await get_client(got_assis)
-            else:
-                userbot = await set_assistant(chat_id)
-    else:
-        if assistant in assistants:
-            userbot = await get_client(assistant)
-        else:
-            userbot = await set_assistant(chat_id)
+#    assistant = assistantdict.get(chat_id)
+#    if not assistant:
+#        dbassistant = await db.find_one({"chat_id": chat_id})
+#        if not dbassistant:
+ #           userbot = await set_assistant(chat_id)
+#        else:
+#            got_assis = dbassistant["assistant"]  #          if got_assis in assistants:
+#                assistantdict[chat_id] = got_assis
+  #              userbot = await get_client(got_assis)
+    #        else:
+#                userbot = await set_assistant(chat_id)
+#    else:
+  #      if assistant in assistants:
+#            userbot = await get_client(assistant)
+     #   else:
+   #         userbot = await set_assistant(chat_id)
 
-    return userbot
+#    return userbot
 
 async def group_assistant(self, chat_id: int) -> int:
     from ANNIEMUSIC.core.userbot import assistants
