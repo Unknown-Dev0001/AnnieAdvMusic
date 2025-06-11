@@ -1,4 +1,3 @@
-import asyncio
 from os import path
 
 from yt_dlp import YoutubeDL
@@ -10,22 +9,23 @@ class SoundAPI:
     def __init__(self):
         self.opts = {
             "outtmpl": "downloads/%(id)s.%(ext)s",
-            "format": "bestaudio[ext=m4a]/bestaudio/best",
+            "format": "best",
             "retries": 3,
             "nooverwrites": False,
             "continuedl": True,
-            "quiet": True,
         }
 
     async def valid(self, link: str):
-        return "soundcloud" in link and "sets" not in link
+        if "soundcloud" in link:
+            return True
+        else:
+            return False
 
     async def download(self, url):
         d = YoutubeDL(self.opts)
         try:
-            info = await asyncio.to_thread(d.extract_info, url)
-        except Exception as e:
-            print(f"Error: {e}")
+            info = d.extract_info(url)
+        except:
             return False
         xyz = path.join("downloads", f"{info['id']}.{info['ext']}")
         duration_min = seconds_to_min(info["duration"])
