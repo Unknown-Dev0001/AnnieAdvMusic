@@ -165,7 +165,12 @@ async def stream(
             )
         else:
             if not forceplay:
-                db[chat_id] = []
+                collection = db["chat_id"]  # choose or create a collection
+await collection.update_one(
+    {"chat_id": chat_id},  # filter
+    {"$set": {"data": []}},  # update
+    upsert=True  # create if it doesn't exist
+)
             await JARVIS.join_call(
                 chat_id,
                 original_chat_id,
