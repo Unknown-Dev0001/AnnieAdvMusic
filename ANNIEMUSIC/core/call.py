@@ -36,6 +36,7 @@ from ANNIEMUSIC.utils.errors import capture_internal_err, send_large_error
 
 autoend = {}
 counter = {}
+db = {}
 
 def dynamic_media_stream(path: str, video: bool = False, ffmpeg_params: str = None) -> MediaStream:
     return MediaStream(
@@ -494,3 +495,4 @@ class Call:
 
 
 JARVIS = Call()
+__all__ = ["JARVIS", "db"]
