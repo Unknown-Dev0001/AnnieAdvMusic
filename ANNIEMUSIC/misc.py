@@ -6,7 +6,7 @@ from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
 
 from config import HEROKU_API_KEY, HEROKU_APP_NAME, OWNER_ID
-from ANNIEMUSIC.core.mongo import mongodb
+from ANNIEMUSIC.core.mongo import mongodb as db
 from .logging import LOGGER
 
 SUDOERS = filters.user()
