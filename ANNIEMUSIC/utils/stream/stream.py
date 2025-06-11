@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardMarkup
 
 import config
 from ANNIEMUSIC import app
-from ANNIEMUSIC.core.call import Yukki
+from ANNIEMUSIC.core.call import JARVIS
 from ANNIEMUSIC.misc import db
 from ANNIEMUSIC.platforms import carbon, saavn, youtube
 from ANNIEMUSIC.utils import fallback
@@ -18,7 +18,9 @@ from ANNIEMUSIC.utils.database import (
 from ANNIEMUSIC.utils.exceptions import AssistantErr
 from ANNIEMUSIC.utils.inline.play import stream_markup, telegram_markup
 from ANNIEMUSIC.utils.inline.playlist import close_markup
-from ANNIEMUSIC.utils.pastebin import Yukkibin
+from ANNIEMUSIC.utils.pastebin import ANNIEBIN
+
+
 from ANNIEMUSIC.utils.stream.queue import put_queue, put_queue_index
 from ANNIEMUSIC.utils.thumbnails import gen_qthumb, gen_thumb
 
@@ -42,7 +44,7 @@ async def stream(
         if not await is_video_allowed(chat_id):
             raise AssistantErr(_["play_7"])
     if forceplay:
-        await Yukki.force_stop_stream(chat_id)
+        await JARVIS.force_stop_stream(chat_id)
     if streamtype == "playlist":
         msg = f"{_['playlist_16']}\n\n"
         count = 0
