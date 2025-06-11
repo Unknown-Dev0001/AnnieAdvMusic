@@ -7,7 +7,7 @@ from pyrogram.types import InlineKeyboardMarkup
 import config
 from ANNIEMUSIC import Carbon, YouTube, app
 from ANNIEMUSIC.core.call import JARVIS
-from ANNIEMUSIC.misc import db
+from ANNIEMUSIC.core.call import db
 from ANNIEMUSIC.utils.database import add_active_video_chat, is_active_chat
 from ANNIEMUSIC.utils.exceptions import AssistantErr
 from ANNIEMUSIC.utils.inline import aq_markup, close_markup, stream_markup
@@ -165,12 +165,7 @@ async def stream(
             )
         else:
             if not forceplay:
-                collection = db["chat_id"]  # choose or create a collection
-await collection.update_one(
-    {"chat_id": chat_id},  # filter
-    {"$set": {"data": []}},  # update
-    upsert=True  # create if it doesn't exist
-)
+                db[chat_id] = []
             await JARVIS.join_call(
                 chat_id,
                 original_chat_id,
