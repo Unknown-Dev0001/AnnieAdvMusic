@@ -44,45 +44,29 @@ async def api_download_song(link: str) -> Optional[str]:
             _logged_api_skip = True
         return None
 
-    video_id = extract_video_id(link)
-    song_url = f"{API_URL}/song/{video_id}?api={API_KEY}"
-
     try:
+        api_url = f"{API_URL}?apikey={API_KEY}&url={link}"
         async with aiohttp.ClientSession() as session:
-            while True:
-                async with session.get(song_url) as response:
-                    if response.status != 200:
-                        print(f"[API ERROR] Status {response.status}")
-                        return None
+            async with session.get(api_url) as response:
+                if response.status != 200:
+                    print(f"[API ERROR] Status {response.status}")
+                    return None
 
-                    data = await response.json()
-                    status = data.get("status", "").lower()
+                data = await response.json()
+                download_url = data.get("link")
+                ext = data.get("format", "mp3").lower()
+                video_id = extract_video_id(link)
+                path = f"{download_folder}/{video_id}.{ext}"
 
-                    if status == "downloading":
-                        await asyncio.sleep(RETRY_DELAY)
-                        continue
-                    elif status == "error":
-                        print(f"[API ERROR] Status=error for {video_id}")
-                        return None
-                    elif status == "done":
-                        download_url = data.get("link")
-                        break
-                    else:
-                        print(f"[API ERROR] Unknown status: {status}")
-                        return None
+                async with session.get(download_url) as file_response:
+                    async with aiofiles.open(path, "wb") as f:
+                        while True:
+                            chunk = await file_response.content.read(CHUNK_SIZE)
+                            if not chunk:
+                                break
+                            await f.write(chunk)
 
-            fmt = data.get("format", "mp3").lower()
-            path = f"{download_folder}/{video_id}.{fmt}"
-
-            async with session.get(download_url) as file_response:
-                async with aiofiles.open(path, "wb") as f:
-                    while True:
-                        chunk = await file_response.content.read(CHUNK_SIZE)
-                        if not chunk:
-                            break
-                        await f.write(chunk)
-
-            return path
+                return path
     except Exception as e:
         print(f"[API Download Error] {e}")
         return None
