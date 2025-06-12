@@ -167,7 +167,11 @@ async def stream(
             if not forceplay:
                 db[chat_id] = []
             await JARVIS.join_call(
-                chat_id, original_chat_id, file_path, video=status, image=thumbnail
+                chat_id,
+                original_chat_id,
+                file_path,
+                video=status,
+                image=thumbnail,
             )
             await put_queue(
                 chat_id,
