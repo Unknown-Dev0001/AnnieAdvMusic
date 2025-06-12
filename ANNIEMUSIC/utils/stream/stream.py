@@ -164,11 +164,11 @@ async def stream(
                 reply_markup=InlineKeyboardMarkup(button),
             )
         else:
-            if not forceplay:                
-    db[chat_id] = []
-await JARVIS.join_call(
-    chat_id, original_chat_id, file_path, video=status, image=thumbnail
-    )
+            if not forceplay:
+                db[chat_id] = []
+            await JARVIS.join_call(
+                chat_id, original_chat_id, file_path, video=status, image=thumbnail
+            )
             await put_queue(
                 chat_id,
                 original_chat_id,
