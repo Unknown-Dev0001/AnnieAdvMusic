@@ -44,45 +44,42 @@ async def api_download_song(link: str) -> Optional[str]:
             _logged_api_skip = True
         return None
 
-    video_id = extract_video_id(link)
-    song_url = f"{API_URL}/song/{video_id}?api={API_KEY}"
-
     try:
         async with aiohttp.ClientSession() as session:
-            while True:
-                async with session.get(song_url) as response:
-                    if response.status != 200:
-                        print(f"[API ERROR] Status {response.status}")
-                        return None
+            async with session.get(API_URL, params={"apikey": str(API_KEY), "url": str(link)}) as response:
+                if response.status != 200:
+                    print(f"[API ERROR] Status {response.status}")
+                    return None
 
-                    data = await response.json()
-                    status = data.get("status", "").lower()
+                data = await response.json()
+                result = data.get("result", {})
+                media_list = result.get("media", [])
 
-                    if status == "downloading":
-                        await asyncio.sleep(RETRY_DELAY)
-                        continue
-                    elif status == "error":
-                        print(f"[API ERROR] Status=error for {video_id}")
-                        return None
-                    elif status == "done":
-                        download_url = data.get("link")
-                        break
-                    else:
-                        print(f"[API ERROR] Unknown status: {status}")
-                        return None
+                if not media_list:
+                    print("[API ERROR] No downloadable media found.")
+                    return None
 
-            fmt = data.get("format", "mp3").lower()
-            path = f"{download_folder}/{video_id}.{fmt}"
+                media = media_list[0]  # Use the first media link
+                download_url = media.get("url")
+                ext = media.get("format", "mp3").lower()
+                title = result.get("title") or extract_video_id(link)
 
-            async with session.get(download_url) as file_response:
-                async with aiofiles.open(path, "wb") as f:
-                    while True:
-                        chunk = await file_response.content.read(CHUNK_SIZE)
-                        if not chunk:
-                            break
-                        await f.write(chunk)
+                if not download_url:
+                    print("[API ERROR] Media URL missing.")
+                    return None
 
-            return path
+                safe_title = safe_filename(title)
+                path = f"{download_folder}/{safe_title}.{ext}"
+
+                async with session.get(download_url) as file_response:
+                    async with aiofiles.open(path, "wb") as f:
+                        while True:
+                            chunk = await file_response.content.read(CHUNK_SIZE)
+                            if not chunk:
+                                break
+                            await f.write(chunk)
+
+                return path
     except Exception as e:
         print(f"[API Download Error] {e}")
         return None
