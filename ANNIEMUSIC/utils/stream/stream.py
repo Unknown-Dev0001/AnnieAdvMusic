@@ -15,7 +15,7 @@ from ANNIEMUSIC.utils.database import (
     is_video_allowed,
 )
 from ANNIEMUSIC.utils.exceptions import AssistantErr
-from ANNIEMUSIC.utils.inline.play import queue_markup, stream_markup, telegram_markup
+from ANNIEMUSIC.utils.inline.play import control_buttons, stream_markup, telegram_markup
 from ANNIEMUSIC.utils.inline.playlist import close_markup
 from ANNIEMUSIC.utils.pastebin import ANNIEBIN
 from ANNIEMUSIC.utils.stream.queue import put_queue, put_queue_index
