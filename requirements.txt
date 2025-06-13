@@ -16,7 +16,7 @@ googlesearch-python
 heroku3
 httpx[http2]==0.27.2
 img2pdf
-kurigram~=2.2.4
+kurigram~=2.2.5
 lexica-api
 motor
 nekosbest
