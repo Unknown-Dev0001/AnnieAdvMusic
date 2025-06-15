@@ -79,7 +79,7 @@ async def start_game_function(chat_id, player_x, message):
     )
 
 
-@app.on_message(filters.command("tictactoe"))
+@app.on_message(filters.command("ttt"))
 async def start_game(client, message: Message):
     chat_id = message.chat.id
     player_x = get_user_identity(message.from_user)
