@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from SONALI import app
+from ANNIEMUSIC import app
 import random
 
 # Game states
